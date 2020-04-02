@@ -4,15 +4,14 @@ import java.util.logging.Logger;
 
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.tiled.TiledMap;
 
 public class Game extends BasicGame{
 
     public static final int SCALE = 2;
     public static final int SIZE = 32;
     public static final int SPRITE_SIZE = 16;
+
     private Map grassMap;
     private ArrayList<Entity> entities;
     private ArrayList<Rectangle> collisionList;
@@ -27,15 +26,15 @@ public class Game extends BasicGame{
         entities = new ArrayList<>();
         collisionList = createCollisionList();
 
-        Player babba = new Player(SIZE + 1, SIZE + 1, gc);
+        Player babba = new Player(SIZE + 1, SIZE + 1);
         entities.add(babba);
     }
 
     @Override
     public void update(GameContainer gc, int i) throws SlickException {
         for(Entity e : entities){
-            if(checkCollision(e.getX(), e.getY())){
-                e.update();
+            if(checkCollision(e.getCollisionBox())) {
+                e.update(gc);
             }
         }
     }
@@ -49,11 +48,10 @@ public class Game extends BasicGame{
         for(Entity e : entities){
             e.getSprite().draw((int)e.getX(), (int)e.getY());
         }
+        renderCollisionBoxes(g);
     }
 
-    public boolean checkCollision(double x, double y){
-        Rectangle rec = new Rectangle((int)x, (int)y, Game.SPRITE_SIZE, Game.SPRITE_SIZE);
-
+    public boolean checkCollision(Rectangle rec){
         for(Rectangle rectangle : collisionList) {
             if(rec.intersects(rectangle)) {
                 System.out.println("boink");
@@ -66,6 +64,10 @@ public class Game extends BasicGame{
     public void renderCollisionBoxes(Graphics g){
         for(int i = 0; i < collisionList.size(); i++){
             g.draw(collisionList.get(i));
+        }
+
+        for(Entity e : entities){
+            g.draw(e.getCollisionBox());
         }
     }
 

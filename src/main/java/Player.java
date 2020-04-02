@@ -4,8 +4,8 @@ public class Player extends Entity {
 
     private Animation sprite, up, down, left, right;
 
-    public Player(double x, double y, GameContainer gc) throws SlickException{
-        super(x, y, gc);
+    public Player(double x, double y) throws SlickException{
+        super(x, y);
 
         Image[] movementUp = {new Image("data/up_1.png"), new Image("data/up_2.png")};
         Image[] movementDown = {new Image("data/down_1.png"), new Image("data/down_2.png")};
@@ -26,8 +26,9 @@ public class Player extends Entity {
         return sprite;
     }
 
-    public void update(){
-        Input input = getInput();
+    @Override
+    public void update(GameContainer gc){
+        Input input = gc.getInput();
         long delta = 1;
 
         if(input.isKeyDown(Input.KEY_W)){
@@ -35,30 +36,28 @@ public class Player extends Entity {
             sprite = up;
             sprite.update(delta);
             y = newY;
-            getCollisionBox().setLocation((int)x, (int)newY);
+            collisionBox.setLocation((int)x, (int)y);
         }
         else if(input.isKeyDown(Input.KEY_S)){
             double newY = y + delta * 0.1;
             sprite = down;
             sprite.update(delta);
             y = newY;
-            getCollisionBox().setLocation((int)x, (int)newY);
+            collisionBox.setLocation((int)x, (int)y);
         }
         else if(input.isKeyDown(Input.KEY_A)){
             double newX = x - delta * 0.1;
             sprite = left;
             sprite.update(delta);
-            System.out.println(x);
             x = newX;
-            System.out.println(x);
-            getCollisionBox().setLocation((int)newX, (int)y);
+            collisionBox.setLocation((int)x, (int)y);
         }
         else if(input.isKeyDown(Input.KEY_D)){
             double newX = x + delta * 0.1;
             sprite = right;
             sprite.update(delta);
             x = newX;
-            getCollisionBox().setLocation((int)newX, (int)y);
+            collisionBox.setLocation((int)x, (int)y);
         }
     }
 }
