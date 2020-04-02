@@ -7,7 +7,7 @@ public abstract class Entity {
 
     private Rectangle collisionBox, deltaRec;
     private GameContainer gc;
-    private double x, y;
+    protected double  x, y;
 
     public Entity(double x, double y, GameContainer gc){
         this.x = x;
@@ -18,9 +18,7 @@ public abstract class Entity {
         deltaRec = new Rectangle((int)x, (int)y, Game.SPRITE_SIZE, Game.SPRITE_SIZE);
     }
 
-    public void update(){
-
-    }
+    public abstract void update();
 
     public Rectangle getCollisionBox(){
         return collisionBox;

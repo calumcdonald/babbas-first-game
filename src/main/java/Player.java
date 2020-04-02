@@ -3,12 +3,9 @@ import org.newdawn.slick.*;
 public class Player extends Entity {
 
     private Animation sprite, up, down, left, right;
-    private double x, y;
 
     public Player(double x, double y, GameContainer gc) throws SlickException{
         super(x, y, gc);
-        this.x = x;
-        this.y = y;
 
         Image[] movementUp = {new Image("data/up_1.png"), new Image("data/up_2.png")};
         Image[] movementDown = {new Image("data/down_1.png"), new Image("data/down_2.png")};
