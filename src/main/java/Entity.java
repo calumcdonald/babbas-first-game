@@ -3,12 +3,11 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Rectangle;
 
-public class Entity {
+public abstract class Entity {
 
     private Rectangle collisionBox, deltaRec;
     private GameContainer gc;
-    double x, y;
-    private Animation sprite, up, down, left, right;
+    private double x, y;
 
     public Entity(double x, double y, GameContainer gc){
         this.x = x;
@@ -44,7 +43,5 @@ public class Entity {
         return y;
     }
 
-    public Animation getSprite(){
-        return sprite;
-    }
+    public abstract Animation getSprite();
 }

@@ -25,18 +25,17 @@ public class Game extends BasicGame{
     public void init(GameContainer gc) throws SlickException {
         grassMap = new Map();
         entities = new ArrayList<>();
+        collisionList = createCollisionList();
 
         Player babba = new Player(SIZE + 1, SIZE + 1, gc);
         entities.add(babba);
-
-        collisionList = createCollisionList();
     }
 
     @Override
     public void update(GameContainer gc, int i) throws SlickException {
-        for(int j = 0; j < entities.size(); j++){
-            if(checkCollision(entities.get(i).getX(), entities.get(i).getY())) {
-                entities.get(j).update();
+        for(Entity e : entities){
+            if(checkCollision(e.getX(), e.getY())){
+                e.update();
             }
         }
     }
@@ -47,12 +46,9 @@ public class Game extends BasicGame{
         gc.setShowFPS(false);
         grassMap.getMap().render(0, 0);
 
-        for(int i = 0; i < entities.size(); i++){
-            double x = entities.get(i).getX();
-            double y = entities.get(i).getY();
-            entities.get(i).getSprite().draw((int)x, (int)y);
+        for(Entity e : entities){
+            e.getSprite().draw((int)e.getX(), (int)e.getY());
         }
-        //sprite.draw((int)x, (int)y);
     }
 
     public boolean checkCollision(double x, double y){
@@ -89,17 +85,13 @@ public class Game extends BasicGame{
         return list;
     }
 
-    public static void main(String[] args)
-    {
-        try
-        {
+    public static void main(String[] args){
+        try{
             AppGameContainer appgc;
             appgc = new AppGameContainer(new Game("Babba's First Game"));
             appgc.setDisplayMode(320 * SCALE, 320 * SCALE, false);
             appgc.start();
-        }
-        catch (SlickException ex)
-        {
+        } catch(SlickException ex){
             Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

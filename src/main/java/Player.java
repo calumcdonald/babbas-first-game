@@ -3,9 +3,12 @@ import org.newdawn.slick.*;
 public class Player extends Entity {
 
     private Animation sprite, up, down, left, right;
+    private double x, y;
 
     public Player(double x, double y, GameContainer gc) throws SlickException{
         super(x, y, gc);
+        this.x = x;
+        this.y = y;
 
         Image[] movementUp = {new Image("data/up_1.png"), new Image("data/up_2.png")};
         Image[] movementDown = {new Image("data/down_1.png"), new Image("data/down_2.png")};
@@ -19,6 +22,11 @@ public class Player extends Entity {
         right = new Animation(movementRight, duration, false);
 
         sprite = right;
+    }
+
+    @Override
+    public Animation getSprite(){
+        return sprite;
     }
 
     public void update(){
@@ -43,7 +51,9 @@ public class Player extends Entity {
             double newX = x - delta * 0.1;
             sprite = left;
             sprite.update(delta);
+            System.out.println(x);
             x = newX;
+            System.out.println(x);
             getCollisionBox().setLocation((int)newX, (int)y);
         }
         else if(input.isKeyDown(Input.KEY_D)){
