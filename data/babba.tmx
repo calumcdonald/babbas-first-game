@@ -6,9 +6,12 @@
  <tileset firstgid="2" name="rock1" tilewidth="32" tileheight="32" tilecount="1" columns="1">
   <image source="rock1.png" width="32" height="32"/>
  </tileset>
+ <tileset firstgid="3" name="portal1" tilewidth="32" tileheight="32" tilecount="1" columns="1">
+  <image source="portal1.png" width="32" height="32"/>
+ </tileset>
  <layer id="1" name="map" width="10" height="10">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACmNiYGBgIhIzEsDkqsNlDzY+seZR015q+ZcYDAA62CUQkAEAAA==
+   H4sIAAAAAAAACmNiYGBgIhIzEsDkqsNlDzY+M5HmUdNeavmXGAwAvKJ0hJABAAA=
   </data>
  </layer>
 </map>

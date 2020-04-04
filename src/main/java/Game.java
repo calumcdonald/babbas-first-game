@@ -12,9 +12,10 @@ public class Game extends BasicGame{
     public static final int SIZE = 32;
     public static final int SPRITE_SIZE = 16;
 
-    private Map grassMap;
+    private Map map;
     private ArrayList<Entity> entities;
     private ArrayList<Rectangle> collisionList;
+    private ArrayList<Rectangle> portalList;
 
     public Game(String gamename){
         super(gamename);
@@ -22,16 +23,13 @@ public class Game extends BasicGame{
 
     @Override
     public void init(GameContainer gc) throws SlickException {
-        grassMap = new Map();
+        map = new Map();
         entities = new ArrayList<>();
         collisionList = createCollisionList();
+        portalList = createPortalList();
 
-        Player babba = new Player(SIZE + 8, SIZE + 8);
+        Player babba = new Player(SIZE + 8, SIZE + 8, 0.1f);
         entities.add(babba);
-
-        NPC badda = new NPC(SIZE * 8 + 15, SIZE * 8 + 15);
-        entities.add(badda);
-
     }
 
     @Override
@@ -39,8 +37,14 @@ public class Game extends BasicGame{
         for(Entity e : entities){
             e.update(gc);
 
-            if(!e.checkCollision(collisionList))
+            if(!e.checkCollision(collisionList)) {
                 e.setNextLocation();
+            }
+            
+            if(e.checkPortalCollision(portalList) != null){
+                map.setMap();
+                updateCollisions();
+            }
         }
     }
 
@@ -48,12 +52,12 @@ public class Game extends BasicGame{
     public void render(GameContainer gc, Graphics g) throws SlickException{
         g.scale(SCALE, SCALE);
         gc.setShowFPS(false);
-        grassMap.getMap().render(0, 0);
+        map.getMap().render(0, 0);
 
         for(Entity e : entities){
             e.getSprite().draw((int)e.getX(), (int)e.getY());
         }
-        //renderCollisionBoxes(g);
+        renderCollisionBoxes(g);
     }
 
 //    public boolean checkCollision(Rectangle rec){
@@ -67,26 +71,50 @@ public class Game extends BasicGame{
 //    }
 
     public void renderCollisionBoxes(Graphics g){
-        for(int i = 0; i < collisionList.size(); i++){
-            g.draw(collisionList.get(i));
+        for(Rectangle wall: collisionList){
+            g.draw(wall);
+        }
+
+        for(Rectangle portal : portalList){
+            g.setColor(Color.magenta);
+            g.draw(portal);
+            g.setColor(Color.white);
         }
 
         for(Entity e : entities){
             g.draw(e.getCollisionBox());
-            g.setColor(Color.red);
-            g.draw(e.getNextCollisionBox());
-            g.setColor(Color.white);
         }
+    }
+
+    public void updateCollisions(){
+        collisionList = createCollisionList();
+        portalList = createPortalList();
     }
 
     public ArrayList<Rectangle> createCollisionList(){
         ArrayList<Rectangle> list = new ArrayList<>();
 
-        int tileLayer = grassMap.getMap().getLayerIndex("map");
+        int tileLayer = map.getMap().getLayerIndex("map");
 
-        for(int i = 0; i < grassMap.getMap().getWidth(); i++){
-            for(int j = 0; j < grassMap.getMap().getHeight(); j++){
-                if(grassMap.getMap().getTileId(i, j, tileLayer) == 2){
+        for(int i = 0; i < map.getMap().getWidth(); i++){
+            for(int j = 0; j < map.getMap().getHeight(); j++){
+                if(map.getMap().getTileId(i, j, tileLayer) == 2){
+                    list.add(new Rectangle(i * SIZE, j * SIZE, SIZE, SIZE));
+                }
+            }
+        }
+
+        return list;
+    }
+
+    public ArrayList<Rectangle> createPortalList(){
+        ArrayList<Rectangle> list = new ArrayList<>();
+
+        int tileLayer = map.getMap().getLayerIndex("map");
+
+        for(int i = 0; i < map.getMap().getWidth(); i++){
+            for(int j = 0; j < map.getMap().getHeight(); j++){
+                if(map.getMap().getTileId(i, j, tileLayer) == 3){
                     list.add(new Rectangle(i * SIZE, j * SIZE, SIZE, SIZE));
                 }
             }

@@ -6,8 +6,8 @@ public class NPC extends Entity{
 
     private Animation sprite, up, down, left, right;
 
-    public NPC(float x, float y) throws SlickException {
-        super(x, y);
+    public NPC(float x, float y, float speed) throws SlickException {
+        super(x, y, speed);
 
         Image[] movementUp = {new Image("data/up_1.png"), new Image("data/up_2.png")};
         Image[] movementDown = {new Image("data/down_1.png"), new Image("data/down_2.png")};
@@ -30,29 +30,29 @@ public class NPC extends Entity{
 
     @Override
     public void update(GameContainer gc){
-        int direction = new Random().nextInt(3);
         long delta = 1;
+        int direction = new Random().nextInt(3);
 
         if(direction == 0){
-            double newY = y - 0.1;
+            double newY = y - speed;
             sprite = up;
             sprite.update(delta);
             nextCollisionBox.setLocation((int)x, (int)newY);
         }
         else if(direction == 1){
-            double newY = y + 0.1;
+            double newY = y + speed;
             sprite = down;
             sprite.update(delta);
             nextCollisionBox.setLocation((int)x, (int)newY);
         }
         else if(direction == 2){
-            double newX = x - 0.1;
+            double newX = x - speed;
             sprite = left;
             sprite.update(delta);
             nextCollisionBox.setLocation((int)newX, (int)y);
         }
         else if(direction == 3){
-            double newX = x + 0.1;
+            double newX = x + speed;
             sprite = right;
             sprite.update(delta);
             nextCollisionBox.setLocation((int)newX, (int)y);

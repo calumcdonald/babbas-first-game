@@ -8,11 +8,12 @@ public abstract class Entity {
 
     protected Rectangle collisionBox;
     protected Rectangle nextCollisionBox;
-    protected float  x, y;
+    protected float x, y, speed;
 
-    public Entity(float x, float y) {
+    public Entity(float x, float y, float speed) {
         this.x = x;
         this.y = y;
+        this.speed = speed;
 
         collisionBox = new Rectangle(x, y, Game.SPRITE_SIZE, Game.SPRITE_SIZE);
         nextCollisionBox = new Rectangle(x, y, Game.SPRITE_SIZE, Game.SPRITE_SIZE);
@@ -20,10 +21,6 @@ public abstract class Entity {
 
     public Rectangle getCollisionBox(){
         return collisionBox;
-    }
-
-    public Rectangle getNextCollisionBox(){
-        return nextCollisionBox;
     }
 
     public boolean checkCollision(List<Rectangle> collisionList){
@@ -35,6 +32,17 @@ public abstract class Entity {
             }
         }
         return false;
+    }
+
+    public Rectangle checkPortalCollision(List<Rectangle> portalList){
+        for(Rectangle rectangle : portalList) {
+            if(nextCollisionBox.intersects(rectangle)){
+                if(!rectangle.equals(nextCollisionBox) && !rectangle.equals(collisionBox)) {
+                    return rectangle;
+                }
+            }
+        }
+        return null;
     }
 
     public void setNextLocation(){

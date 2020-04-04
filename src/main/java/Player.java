@@ -2,12 +2,10 @@ import org.newdawn.slick.*;
 
 public class Player extends Entity {
 
-    private static final float SPEED = 0.2f;
-
     private Animation sprite, up, down, left, right;
 
-    public Player(float x, float y) throws SlickException{
-        super(x, y);
+    public Player(float x, float y, float speed) throws SlickException{
+        super(x, y, speed);
 
         Image[] movementUp = {new Image("data/up_1.png"), new Image("data/up_2.png")};
         Image[] movementDown = {new Image("data/down_1.png"), new Image("data/down_2.png")};
@@ -33,37 +31,43 @@ public class Player extends Entity {
         Input input = gc.getInput();
         long delta = 1;
 
+        if(input.isKeyDown(Input.KEY_LSHIFT)){
+            speed = 0.2f;
+        }
+        else{
+            speed = 0.1f;
+        }
+
         if(input.isKeyDown(Input.KEY_W)){
-            float newY = y - SPEED;
+            float newY = y - speed;
             sprite = up;
             sprite.update(delta);
             nextCollisionBox.setLocation(x, newY);
-            //y = newY;
-            //collisionBox.setLocation((int)x, (int)y);
         }
         else if(input.isKeyDown(Input.KEY_S)){
-            float newY = y + SPEED;
+            float newY = y + speed;
             sprite = down;
             sprite.update(delta);
             nextCollisionBox.setLocation(x, newY);
-            //y = newY;
-            //nextCollisionBox.setLocation((int)x, (int)y);
         }
         else if(input.isKeyDown(Input.KEY_A)){
-            float newX = x - SPEED;
+            float newX = x - speed;
             sprite = left;
             sprite.update(delta);
             nextCollisionBox.setLocation(newX, y);
-            //x = newX;
-            //collisionBox.setLocation((int)x, (int)y);
         }
         else if(input.isKeyDown(Input.KEY_D)){
-            float newX = x + SPEED;
+            float newX = x + speed;
             sprite = right;
             sprite.update(delta);
             nextCollisionBox.setLocation(newX, y);
-            //x = newX;
-            //nextCollisionBox.setLocation((int)x, (int)y);
+        }
+        else if(input.isKeyDown(Input.KEY_W) && input.isKeyDown(Input.KEY_D)){
+            float newX = x + speed;
+            float newY = y + speed;
+            sprite = right;
+            sprite.update(delta);
+            nextCollisionBox.setLocation(newX, newY);
         }
     }
 }
