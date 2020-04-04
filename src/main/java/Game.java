@@ -28,7 +28,7 @@ public class Game extends BasicGame{
 
         Player babba = new Player(SIZE + 8, SIZE + 8);
         entities.add(babba);
-
+        
         NPC badda = new NPC(SIZE * 8 + 15, SIZE * 8 + 15);
         entities.add(badda);
 
@@ -39,11 +39,11 @@ public class Game extends BasicGame{
         for(Entity e : entities){
             e.update(gc);
 
-            if(checkCollision(e.getNextCollisionBox())){
+            if(!checkCollision(e.getNextCollisionBox())){
                 e.setNextLocation();
             }
             else{
-                //System.out.println("boink");
+                System.out.println("boink");
             }
         }
     }
@@ -57,16 +57,16 @@ public class Game extends BasicGame{
         for(Entity e : entities){
             e.getSprite().draw((int)e.getX(), (int)e.getY());
         }
-        //renderCollisionBoxes(g);
+        renderCollisionBoxes(g);
     }
 
     public boolean checkCollision(Rectangle rec){
         for(Rectangle rectangle : collisionList) {
             if(rec.intersects(rectangle)){
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     public void renderCollisionBoxes(Graphics g){
