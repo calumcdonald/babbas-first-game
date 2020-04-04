@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,8 +29,10 @@ public class Game extends BasicGame{
         collisionList = createCollisionList();
         portalList = createPortalList();
 
-        Player babba = new Player(SIZE + 8, SIZE + 8, 0.1f);
+        Player babba = new Player(SIZE + 8, SIZE + 8);
         entities.add(babba);
+
+        loadStars();
     }
 
     @Override
@@ -55,20 +58,10 @@ public class Game extends BasicGame{
         map.getMap().render(0, 0);
 
         for(Entity e : entities){
-            e.getSprite().draw((int)e.getX(), (int)e.getY());
+            e.getSprite().draw(e.getX(), e.getY());
         }
-        renderCollisionBoxes(g);
+        //renderCollisionBoxes(g);
     }
-
-//    public boolean checkCollision(Rectangle rec){
-//        for(Rectangle rectangle : collisionList) {
-//            if(rec.intersects(rectangle)){
-//                return false;
-//            }
-//        }
-//        System.out.println("bang");
-//        return true;
-//    }
 
     public void renderCollisionBoxes(Graphics g){
         for(Rectangle wall: collisionList){
@@ -82,13 +75,43 @@ public class Game extends BasicGame{
         }
 
         for(Entity e : entities){
-            g.draw(e.getCollisionBox());
+            if(e instanceof Star){
+                g.setColor(Color.yellow);
+                g.draw(e.getCollisionBox());
+                g.setColor(Color.white);
+            }
+            else if(e instanceof Player) {
+                g.setColor(Color.red);
+                g.draw(e.getCollisionBox());
+                g.setColor(Color.white);
+            }
         }
     }
 
-    public void updateCollisions(){
+    public void updateCollisions() throws SlickException{
         collisionList = createCollisionList();
         portalList = createPortalList();
+        //loadStars();
+    }
+
+    public void loadStars() throws SlickException{
+        ArrayList<Rectangle> grass = new ArrayList<>();
+
+        int tileLayer = map.getMap().getLayerIndex("map");
+
+        for(int i = 0; i < map.getMap().getWidth(); i++){
+            for(int j = 0; j < map.getMap().getHeight(); j++){
+                if(map.getMap().getTileId(i, j, tileLayer) == 1){
+                    grass.add(new Rectangle(i * SIZE, j * SIZE, SIZE, SIZE));
+                }
+            }
+        }
+
+        for(int i = 0; i < 5; i++){
+            int rand = new Random().nextInt(grass.size());
+            Rectangle tile = grass.get(rand);
+            entities.add(new Star(tile.getX(), tile.getY()));
+        }
     }
 
     public ArrayList<Rectangle> createCollisionList(){

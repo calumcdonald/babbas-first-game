@@ -8,12 +8,11 @@ public abstract class Entity {
 
     protected Rectangle collisionBox;
     protected Rectangle nextCollisionBox;
-    protected float x, y, speed;
+    protected float x, y;
 
-    public Entity(float x, float y, float speed) {
+    public Entity(float x, float y) {
         this.x = x;
         this.y = y;
-        this.speed = speed;
 
         collisionBox = new Rectangle(x, y, Game.SPRITE_SIZE, Game.SPRITE_SIZE);
         nextCollisionBox = new Rectangle(x, y, Game.SPRITE_SIZE, Game.SPRITE_SIZE);
@@ -36,7 +35,7 @@ public abstract class Entity {
 
     public Rectangle checkPortalCollision(List<Rectangle> portalList){
         for(Rectangle rectangle : portalList) {
-            if(nextCollisionBox.intersects(rectangle)){
+            if(nextCollisionBox.intersects(rectangle) && this instanceof Player){
                 if(!rectangle.equals(nextCollisionBox) && !rectangle.equals(collisionBox)) {
                     return rectangle;
                 }

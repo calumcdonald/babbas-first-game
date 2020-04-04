@@ -2,10 +2,12 @@ import org.newdawn.slick.*;
 
 public class Player extends Entity {
 
+    private static final float SPEED = 0.1f;
+    private static final float SPRINT_SPEED = 0.3f;
     private Animation sprite, up, down, left, right;
 
-    public Player(float x, float y, float speed) throws SlickException{
-        super(x, y, speed);
+    public Player(float x, float y) throws SlickException{
+        super(x, y);
 
         Image[] movementUp = {new Image("data/up_1.png"), new Image("data/up_2.png")};
         Image[] movementDown = {new Image("data/down_1.png"), new Image("data/down_2.png")};
@@ -29,13 +31,14 @@ public class Player extends Entity {
     @Override
     public void update(GameContainer gc){
         Input input = gc.getInput();
+        float speed;
         long delta = 1;
 
         if(input.isKeyDown(Input.KEY_LSHIFT)){
-            speed = 0.2f;
+            speed = SPRINT_SPEED;
         }
         else{
-            speed = 0.1f;
+            speed = SPEED;
         }
 
         if(input.isKeyDown(Input.KEY_W)){
