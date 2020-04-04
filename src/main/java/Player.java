@@ -32,28 +32,36 @@ public class Player extends Entity {
         long delta = 1;
 
         if(input.isKeyDown(Input.KEY_W)){
-            double newY = y - delta * 0.1;
+            double newY = y - 0.1;
             sprite = up;
             sprite.update(delta);
             nextCollisionBox.setLocation((int)x, (int)newY);
+            //y = newY;
+            //collisionBox.setLocation((int)x, (int)y);
         }
         else if(input.isKeyDown(Input.KEY_S)){
-            double newY = y + delta * 0.1;
+            double newY = y + 0.1;
             sprite = down;
             sprite.update(delta);
             nextCollisionBox.setLocation((int)x, (int)newY);
+            //y = newY;
+            //nextCollisionBox.setLocation((int)x, (int)y);
         }
         else if(input.isKeyDown(Input.KEY_A)){
-            double newX = x - delta * 0.1;
+            double newX = x - 0.1;
             sprite = left;
             sprite.update(delta);
             nextCollisionBox.setLocation((int)newX, (int)y);
+            //x = newX;
+            //collisionBox.setLocation((int)x, (int)y);
         }
         else if(input.isKeyDown(Input.KEY_D)){
-            double newX = x + delta * 0.1;
+            double newX = x + 0.1;
             sprite = right;
             sprite.update(delta);
             nextCollisionBox.setLocation((int)newX, (int)y);
+            //x = newX;
+            //nextCollisionBox.setLocation((int)x, (int)y);
         }
     }
 }

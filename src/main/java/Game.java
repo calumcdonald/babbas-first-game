@@ -26,25 +26,25 @@ public class Game extends BasicGame{
         entities = new ArrayList<>();
         collisionList = createCollisionList();
 
-        Player babba = new Player(SIZE + 1, SIZE + 1);
+        Player babba = new Player(SIZE + 8, SIZE + 8);
         entities.add(babba);
 
         /*
         NPC badda = new NPC(SIZE * 8 + 15, SIZE + 1);
         entities.add(badda);
         */
+
     }
 
     @Override
     public void update(GameContainer gc, int i) throws SlickException {
         for(Entity e : entities){
             e.update(gc);
-
-            if(checkCollision(e.getNextCollisionBox())){
-                e.setLocation(e.getNextCollisionBox());
+            if(!checkCollision(e.getNextCollisionBox())){
+                System.out.println("boink");
             }
             else{
-                e.setLocation(e.getCollisionBox());
+                e.setNextLocation();
             }
         }
     }
@@ -64,7 +64,6 @@ public class Game extends BasicGame{
     public boolean checkCollision(Rectangle rec){
         for(Rectangle rectangle : collisionList) {
             if(rec.intersects(rectangle)){
-                System.out.println("boink");
                 return false;
             }
         }

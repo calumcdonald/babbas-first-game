@@ -24,10 +24,10 @@ public abstract class Entity {
         return nextCollisionBox;
     }
 
-    public void setLocation(Rectangle r){
-        this.x = r.getX();
-        this.y = r.getY();
-        collisionBox = r;
+    public void setNextLocation(){
+        this.x = nextCollisionBox.getX();
+        this.y = nextCollisionBox.getY();
+        collisionBox = nextCollisionBox;
     }
 
     public double getX(){
