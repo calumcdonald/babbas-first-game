@@ -28,13 +28,23 @@ public class Game extends BasicGame{
 
         Player babba = new Player(SIZE + 1, SIZE + 1);
         entities.add(babba);
+
+        /*
+        NPC badda = new NPC(SIZE * 8 + 15, SIZE + 1);
+        entities.add(badda);
+        */
     }
 
     @Override
     public void update(GameContainer gc, int i) throws SlickException {
         for(Entity e : entities){
-            if(checkCollision(e.getCollisionBox())) {
-                e.update(gc);
+            e.update(gc);
+
+            if(checkCollision(e.getNextCollisionBox())){
+                e.setLocation(e.getNextCollisionBox());
+            }
+            else{
+                e.setLocation(e.getCollisionBox());
             }
         }
     }
@@ -53,7 +63,7 @@ public class Game extends BasicGame{
 
     public boolean checkCollision(Rectangle rec){
         for(Rectangle rectangle : collisionList) {
-            if(rec.intersects(rectangle)) {
+            if(rec.intersects(rectangle)){
                 System.out.println("boink");
                 return false;
             }
@@ -68,6 +78,9 @@ public class Game extends BasicGame{
 
         for(Entity e : entities){
             g.draw(e.getCollisionBox());
+            g.setColor(Color.red);
+            g.draw(e.getNextCollisionBox());
+            g.setColor(Color.white);
         }
     }
 

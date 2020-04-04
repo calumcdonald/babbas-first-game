@@ -5,17 +5,29 @@ import org.newdawn.slick.geom.Rectangle;
 public abstract class Entity {
 
     protected Rectangle collisionBox;
+    protected Rectangle nextCollisionBox;
     protected double  x, y;
 
-    public Entity(double x, double y){
+    public Entity(double x, double y) {
         this.x = x;
         this.y = y;
 
-        collisionBox = new Rectangle((int)x, (int)y, Game.SPRITE_SIZE, Game.SPRITE_SIZE);
+        collisionBox = new Rectangle((int) x, (int) y, Game.SPRITE_SIZE, Game.SPRITE_SIZE);
+        nextCollisionBox = new Rectangle((int) x, (int) y, Game.SPRITE_SIZE, Game.SPRITE_SIZE);
     }
 
     public Rectangle getCollisionBox(){
         return collisionBox;
+    }
+
+    public Rectangle getNextCollisionBox(){
+        return nextCollisionBox;
+    }
+
+    public void setLocation(Rectangle r){
+        this.x = r.getX();
+        this.y = r.getY();
+        collisionBox = r;
     }
 
     public double getX(){
