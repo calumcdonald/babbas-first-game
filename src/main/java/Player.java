@@ -2,9 +2,11 @@ import org.newdawn.slick.*;
 
 public class Player extends Entity {
 
+    private static final float SPEED = 0.2f;
+
     private Animation sprite, up, down, left, right;
 
-    public Player(double x, double y) throws SlickException{
+    public Player(float x, float y) throws SlickException{
         super(x, y);
 
         Image[] movementUp = {new Image("data/up_1.png"), new Image("data/up_2.png")};
@@ -32,34 +34,34 @@ public class Player extends Entity {
         long delta = 1;
 
         if(input.isKeyDown(Input.KEY_W)){
-            double newY = y - 0.1;
+            float newY = y - SPEED;
             sprite = up;
             sprite.update(delta);
-            nextCollisionBox.setLocation((int)x, (int)newY);
+            nextCollisionBox.setLocation(x, newY);
             //y = newY;
             //collisionBox.setLocation((int)x, (int)y);
         }
         else if(input.isKeyDown(Input.KEY_S)){
-            double newY = y + 0.1;
+            float newY = y + SPEED;
             sprite = down;
             sprite.update(delta);
-            nextCollisionBox.setLocation((int)x, (int)newY);
+            nextCollisionBox.setLocation(x, newY);
             //y = newY;
             //nextCollisionBox.setLocation((int)x, (int)y);
         }
         else if(input.isKeyDown(Input.KEY_A)){
-            double newX = x - 0.1;
+            float newX = x - SPEED;
             sprite = left;
             sprite.update(delta);
-            nextCollisionBox.setLocation((int)newX, (int)y);
+            nextCollisionBox.setLocation(newX, y);
             //x = newX;
             //collisionBox.setLocation((int)x, (int)y);
         }
         else if(input.isKeyDown(Input.KEY_D)){
-            double newX = x + 1;
+            float newX = x + SPEED;
             sprite = right;
             sprite.update(delta);
-            nextCollisionBox.setLocation((int)newX, (int)y);
+            nextCollisionBox.setLocation(newX, y);
             //x = newX;
             //nextCollisionBox.setLocation((int)x, (int)y);
         }

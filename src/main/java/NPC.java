@@ -6,7 +6,7 @@ public class NPC extends Entity{
 
     private Animation sprite, up, down, left, right;
 
-    public NPC(double x, double y) throws SlickException {
+    public NPC(float x, float y) throws SlickException {
         super(x, y);
 
         Image[] movementUp = {new Image("data/up_1.png"), new Image("data/up_2.png")};

@@ -39,12 +39,8 @@ public class Game extends BasicGame{
         for(Entity e : entities){
             e.update(gc);
 
-            if(checkCollision(e.getNextCollisionBox())){
+            if(!e.checkCollision(collisionList))
                 e.setNextLocation();
-            }
-            else{
-                //System.out.println("boink");
-            }
         }
     }
 
@@ -60,14 +56,15 @@ public class Game extends BasicGame{
         //renderCollisionBoxes(g);
     }
 
-    public boolean checkCollision(Rectangle rec){
-        for(Rectangle rectangle : collisionList) {
-            if(rec.intersects(rectangle)){
-                return false;
-            }
-        }
-        return true;
-    }
+//    public boolean checkCollision(Rectangle rec){
+//        for(Rectangle rectangle : collisionList) {
+//            if(rec.intersects(rectangle)){
+//                return false;
+//            }
+//        }
+//        System.out.println("bang");
+//        return true;
+//    }
 
     public void renderCollisionBoxes(Graphics g){
         for(int i = 0; i < collisionList.size(); i++){

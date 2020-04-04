@@ -2,18 +2,20 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.geom.Rectangle;
 
+import java.util.List;
+
 public abstract class Entity {
 
     protected Rectangle collisionBox;
     protected Rectangle nextCollisionBox;
-    protected double  x, y;
+    protected float  x, y;
 
-    public Entity(double x, double y) {
+    public Entity(float x, float y) {
         this.x = x;
         this.y = y;
 
-        collisionBox = new Rectangle((int) x, (int) y, Game.SPRITE_SIZE, Game.SPRITE_SIZE);
-        nextCollisionBox = new Rectangle((int) x, (int) y, Game.SPRITE_SIZE, Game.SPRITE_SIZE);
+        collisionBox = new Rectangle(x, y, Game.SPRITE_SIZE, Game.SPRITE_SIZE);
+        nextCollisionBox = new Rectangle(x, y, Game.SPRITE_SIZE, Game.SPRITE_SIZE);
     }
 
     public Rectangle getCollisionBox(){
@@ -24,17 +26,28 @@ public abstract class Entity {
         return nextCollisionBox;
     }
 
+    public boolean checkCollision(List<Rectangle> collisionList){
+        for(Rectangle rectangle : collisionList) {
+            if(nextCollisionBox.intersects(rectangle)){
+                if(!rectangle.equals(nextCollisionBox) && !rectangle.equals(collisionBox)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public void setNextLocation(){
         this.x = nextCollisionBox.getX();
         this.y = nextCollisionBox.getY();
         collisionBox = nextCollisionBox;
     }
 
-    public double getX(){
+    public float getX(){
         return x;
     }
 
-    public double getY(){
+    public float getY(){
         return y;
     }
 
