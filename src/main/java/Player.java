@@ -56,7 +56,7 @@ public class Player extends Entity {
             //collisionBox.setLocation((int)x, (int)y);
         }
         else if(input.isKeyDown(Input.KEY_D)){
-            double newX = x + 0.1;
+            double newX = x + 1;
             sprite = right;
             sprite.update(delta);
             nextCollisionBox.setLocation((int)newX, (int)y);

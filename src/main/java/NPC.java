@@ -34,32 +34,28 @@ public class NPC extends Entity{
         long delta = 1;
 
         if(direction == 0){
-            double newY = y - delta * 0.1;
+            double newY = y - 0.1;
             sprite = up;
             sprite.update(delta);
-            y = newY;
-            collisionBox.setLocation((int)x, (int)y);
+            nextCollisionBox.setLocation((int)x, (int)newY);
         }
         else if(direction == 1){
-            double newY = y + delta * 0.1;
+            double newY = y + 0.1;
             sprite = down;
             sprite.update(delta);
-            y = newY;
-            collisionBox.setLocation((int)x, (int)y);
+            nextCollisionBox.setLocation((int)x, (int)newY);
         }
         else if(direction == 2){
-            double newX = x - delta * 0.1;
+            double newX = x - 0.1;
             sprite = left;
             sprite.update(delta);
-            x = newX;
-            collisionBox.setLocation((int)x, (int)y);
+            nextCollisionBox.setLocation((int)newX, (int)y);
         }
         else if(direction == 3){
-            double newX = x + delta * 0.1;
+            double newX = x + 0.1;
             sprite = right;
             sprite.update(delta);
-            x = newX;
-            collisionBox.setLocation((int)x, (int)y);
+            nextCollisionBox.setLocation((int)newX, (int)y);
         }
     }
 }
