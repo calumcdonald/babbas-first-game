@@ -7,6 +7,8 @@ public class NPC extends Entity{
     private static final float SPEED = 0.1f;
     
     private Animation sprite, up, down, left, right;
+    private float lastMoveTime = System.currentTimeMillis();
+    private int direction = 4;
 
     public NPC(float x, float y) throws SlickException {
         super(x, y);
@@ -33,31 +35,35 @@ public class NPC extends Entity{
     @Override
     public void update(GameContainer gc){
         long delta = 1;
-        int direction = new Random().nextInt(3);
+        long currentTime = System.currentTimeMillis();
+
+        if(currentTime >= lastMoveTime + 3000) {
+            direction = new Random().nextInt(4);
+        }
 
         if(direction == 0){
-            double newY = y - SPEED;
+            float newY = y - SPEED;
             sprite = up;
             sprite.update(delta);
-            nextCollisionBox.setLocation((int)x, (int)newY);
+            nextCollisionBox.setLocation(x, newY);
         }
         else if(direction == 1){
-            double newY = y + SPEED;
+            float newY = y + SPEED;
             sprite = down;
             sprite.update(delta);
-            nextCollisionBox.setLocation((int)x, (int)newY);
+            nextCollisionBox.setLocation(x, newY);
         }
         else if(direction == 2){
-            double newX = x - SPEED;
+            float newX = x - SPEED;
             sprite = left;
             sprite.update(delta);
-            nextCollisionBox.setLocation((int)newX, (int)y);
+            nextCollisionBox.setLocation(newX, y);
         }
         else if(direction == 3){
-            double newX = x + SPEED;
+            float newX = x + SPEED;
             sprite = right;
             sprite.update(delta);
-            nextCollisionBox.setLocation((int)newX, (int)y);
+            nextCollisionBox.setLocation(newX, y);
         }
     }
 }

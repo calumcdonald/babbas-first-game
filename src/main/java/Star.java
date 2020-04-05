@@ -5,6 +5,8 @@ import org.newdawn.slick.SlickException;
 
 public class Star extends Entity{
 
+    private static final int SCORE_VALUE = 10;
+
     private Animation sprite;
 
     public Star(float x, float y) throws SlickException {
@@ -25,5 +27,9 @@ public class Star extends Entity{
     @Override
     public Animation getSprite() {
         return sprite;
+    }
+
+    public int getScoreValue(){
+        return SCORE_VALUE;
     }
 }

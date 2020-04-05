@@ -4,7 +4,9 @@ public class Player extends Entity {
 
     private static final float SPEED = 0.1f;
     private static final float SPRINT_SPEED = 0.3f;
+
     private Animation sprite, up, down, left, right;
+    private int score = 0;
 
     public Player(float x, float y) throws SlickException{
         super(x, y);
@@ -72,5 +74,13 @@ public class Player extends Entity {
             sprite.update(delta);
             nextCollisionBox.setLocation(newX, newY);
         }
+    }
+
+    public void updateScore(int amount){
+        score+=amount;
+    }
+
+    public int getScore(){
+        return score;
     }
 }

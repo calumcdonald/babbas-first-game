@@ -14,9 +14,7 @@ public class Game extends BasicGame{
     public static final int SPRITE_SIZE = 16;
 
     private Map map;
-    private ArrayList<Entity> entities;
-    private ArrayList<Rectangle> collisionList;
-    private ArrayList<Rectangle> portalList;
+    //private ArrayList<Entity> entities;
 
     public Game(String gamename){
         super(gamename);
@@ -24,29 +22,27 @@ public class Game extends BasicGame{
 
     @Override
     public void init(GameContainer gc) throws SlickException {
-        map = new Map();
+        map = new Map("data/babba.tmx");
+        /*
         entities = new ArrayList<>();
-        collisionList = createCollisionList();
-        portalList = createPortalList();
 
         Player babba = new Player(SIZE + 8, SIZE + 8);
         entities.add(babba);
 
-        loadStars();
+         */
     }
 
     @Override
     public void update(GameContainer gc, int i) throws SlickException {
-        for(Entity e : entities){
+        for(Entity e : map.getEntities()){
             e.update(gc);
 
-            if(!e.checkCollision(collisionList)) {
+            if(!e.checkCollision(map.getCollisionList())) {
                 e.setNextLocation();
             }
             
-            if(e.checkPortalCollision(portalList) != null){
-                map.setMap();
-                updateCollisions();
+            if(e.checkPortalCollision(map.getPortalList()) != null){
+                map.updateCollisions();
             }
         }
     }
@@ -57,24 +53,24 @@ public class Game extends BasicGame{
         gc.setShowFPS(false);
         map.getMap().render(0, 0);
 
-        for(Entity e : entities){
+        for(Entity e : map.getEntities()){
             e.getSprite().draw(e.getX(), e.getY());
         }
         //renderCollisionBoxes(g);
     }
 
     public void renderCollisionBoxes(Graphics g){
-        for(Rectangle wall: collisionList){
+        for(Rectangle wall: map.getCollisionList()){
             g.draw(wall);
         }
 
-        for(Rectangle portal : portalList){
+        for(Rectangle portal : map.getPortalList()){
             g.setColor(Color.magenta);
             g.draw(portal);
             g.setColor(Color.white);
         }
 
-        for(Entity e : entities){
+        for(Entity e : map.getEntities()){
             if(e instanceof Star){
                 g.setColor(Color.yellow);
                 g.draw(e.getCollisionBox());
@@ -88,12 +84,7 @@ public class Game extends BasicGame{
         }
     }
 
-    public void updateCollisions() throws SlickException{
-        collisionList = createCollisionList();
-        portalList = createPortalList();
-        //loadStars();
-    }
-
+    /*
     public void loadStars() throws SlickException{
         ArrayList<Rectangle> grass = new ArrayList<>();
 
@@ -113,7 +104,9 @@ public class Game extends BasicGame{
             entities.add(new Star(tile.getX(), tile.getY()));
         }
     }
+     */
 
+    /*
     public ArrayList<Rectangle> createCollisionList(){
         ArrayList<Rectangle> list = new ArrayList<>();
 
@@ -145,6 +138,8 @@ public class Game extends BasicGame{
 
         return list;
     }
+
+     */
 
     public static void main(String[] args){
         try{
