@@ -23,13 +23,6 @@ public class Game extends BasicGame{
     @Override
     public void init(GameContainer gc) throws SlickException {
         map = new Map("data/babba.tmx");
-        /*
-        entities = new ArrayList<>();
-
-        Player babba = new Player(SIZE + 8, SIZE + 8);
-        entities.add(babba);
-
-         */
     }
 
     @Override
@@ -83,63 +76,6 @@ public class Game extends BasicGame{
             }
         }
     }
-
-    /*
-    public void loadStars() throws SlickException{
-        ArrayList<Rectangle> grass = new ArrayList<>();
-
-        int tileLayer = map.getMap().getLayerIndex("map");
-
-        for(int i = 0; i < map.getMap().getWidth(); i++){
-            for(int j = 0; j < map.getMap().getHeight(); j++){
-                if(map.getMap().getTileId(i, j, tileLayer) == 1){
-                    grass.add(new Rectangle(i * SIZE, j * SIZE, SIZE, SIZE));
-                }
-            }
-        }
-
-        for(int i = 0; i < 5; i++){
-            int rand = new Random().nextInt(grass.size());
-            Rectangle tile = grass.get(rand);
-            entities.add(new Star(tile.getX(), tile.getY()));
-        }
-    }
-     */
-
-    /*
-    public ArrayList<Rectangle> createCollisionList(){
-        ArrayList<Rectangle> list = new ArrayList<>();
-
-        int tileLayer = map.getMap().getLayerIndex("map");
-
-        for(int i = 0; i < map.getMap().getWidth(); i++){
-            for(int j = 0; j < map.getMap().getHeight(); j++){
-                if(map.getMap().getTileId(i, j, tileLayer) == 2){
-                    list.add(new Rectangle(i * SIZE, j * SIZE, SIZE, SIZE));
-                }
-            }
-        }
-
-        return list;
-    }
-
-    public ArrayList<Rectangle> createPortalList(){
-        ArrayList<Rectangle> list = new ArrayList<>();
-
-        int tileLayer = map.getMap().getLayerIndex("map");
-
-        for(int i = 0; i < map.getMap().getWidth(); i++){
-            for(int j = 0; j < map.getMap().getHeight(); j++){
-                if(map.getMap().getTileId(i, j, tileLayer) == 3){
-                    list.add(new Rectangle(i * SIZE, j * SIZE, SIZE, SIZE));
-                }
-            }
-        }
-
-        return list;
-    }
-
-     */
 
     public static void main(String[] args){
         try{

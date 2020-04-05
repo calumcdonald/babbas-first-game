@@ -17,10 +17,10 @@ public class Map {
 
     public Map(String mapPath) throws SlickException {
         map = new TiledMap(mapPath);
+        entities = new ArrayList<>();
         collisionList = createCollisionList();
         portalList = createPortalList();
         starList = createStars();
-        entities = new ArrayList<>();
 
         Player babba = new Player(SIZE + 8, SIZE + 8);
         entities.add(babba);
