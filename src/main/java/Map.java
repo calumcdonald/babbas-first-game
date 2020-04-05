@@ -18,48 +18,30 @@ public class Map {
     public Map(String mapPath) throws SlickException {
         map = new TiledMap(mapPath);
         entities = new ArrayList<>();
-        collisionList = createCollisionList();
-        portalList = createPortalList();
-        starList = createStars();
+        collisionList = new ArrayList<>();
+        portalList = new ArrayList<>();
+        createCollisionLists();
 
-        Player babba = new Player(SIZE + 8, SIZE + 8);
-        entities.add(babba);
+        starList = createStars();
     }
 
     public TiledMap getMap(){
         return map;
     }
 
-    public ArrayList<Rectangle> createCollisionList(){
-        ArrayList<Rectangle> list = new ArrayList<>();
-
+    public void createCollisionLists(){
         int tileLayer = map.getLayerIndex("map");
 
         for(int i = 0; i < map.getWidth(); i++){
             for(int j = 0; j < map.getHeight(); j++){
                 if(map.getTileId(i, j, tileLayer) == 2){
-                    list.add(new Rectangle(i * SIZE, j * SIZE, SIZE, SIZE));
+                    collisionList.add(new Rectangle(i * SIZE, j * SIZE, SIZE, SIZE));
+                }
+                else if(map.getTileId(i, j, tileLayer) == 3){
+                    collisionList.add(new Rectangle(i * SIZE, j * SIZE, SIZE, SIZE));
                 }
             }
         }
-
-        return list;
-    }
-
-    public ArrayList<Rectangle> createPortalList(){
-        ArrayList<Rectangle> list = new ArrayList<>();
-
-        int tileLayer = map.getLayerIndex("map");
-
-        for(int i = 0; i < map.getWidth(); i++){
-            for(int j = 0; j < map.getHeight(); j++){
-                if(map.getTileId(i, j, tileLayer) == 3){
-                    list.add(new Rectangle(i * SIZE, j * SIZE, SIZE, SIZE));
-                }
-            }
-        }
-
-        return list;
     }
 
     public ArrayList<Rectangle> createStars() throws SlickException{
@@ -79,15 +61,14 @@ public class Map {
         for(int i = 0; i < 5; i++){
             int rand = new Random().nextInt(grass.size());
             Rectangle tile = grass.get(rand);
-            entities.add(new Star(tile.getX(), tile.getY()));
-            starList.add(new Rectangle(tile.getX(), tile.getY(), SIZE, SIZE));
+            entities.add(new Star(tile.getX() + 8, tile.getY() + 8));
+            starList.add(new Rectangle(tile.getX() + 8, tile.getY() + 8, SIZE, SIZE));
         }
         return starList;
     }
 
     public void updateCollisions(){
-        createCollisionList();
-        createPortalList();
+        createCollisionLists();
     }
 
     public ArrayList<Rectangle> getCollisionList(){
@@ -104,5 +85,13 @@ public class Map {
 
     public ArrayList<Entity> getEntities(){
         return entities;
+    }
+
+    public void addEntity(Entity entity){
+        entities.add(entity);
+    }
+
+    public void removeEntity(Entity entity){
+        entities.remove(entity);
     }
 }

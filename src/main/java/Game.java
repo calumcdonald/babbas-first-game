@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,7 +12,6 @@ public class Game extends BasicGame{
     public static final int SPRITE_SIZE = 16;
 
     private Map map;
-    //private ArrayList<Entity> entities;
 
     public Game(String gamename){
         super(gamename);
@@ -23,6 +20,9 @@ public class Game extends BasicGame{
     @Override
     public void init(GameContainer gc) throws SlickException {
         map = new Map("data/babba.tmx");
+
+        Player babba = new Player(SIZE + 8, SIZE + 8);
+        map.addEntity(babba);
     }
 
     @Override
@@ -37,6 +37,10 @@ public class Game extends BasicGame{
             if(e.checkPortalCollision(map.getPortalList()) != null){
                 map.updateCollisions();
             }
+
+            if(e.checkStarCollision(map.getStarList())){
+                System.out.println("10 POINTS");
+            }
         }
     }
 
@@ -49,7 +53,7 @@ public class Game extends BasicGame{
         for(Entity e : map.getEntities()){
             e.getSprite().draw(e.getX(), e.getY());
         }
-        //renderCollisionBoxes(g);
+        renderCollisionBoxes(g);
     }
 
     public void renderCollisionBoxes(Graphics g){
