@@ -5,6 +5,7 @@ import collisions.Collidable;
 import collisions.Collision;
 import entities.Entity;
 import entities.Player;
+import entities.Star;
 import map.Map;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
@@ -36,6 +37,8 @@ public class Game extends BasicGame{
 
     @Override
     public void update(GameContainer gc, int i) throws SlickException {
+        Collidable starToRemove = null;
+
         for(Entity e : map.getEntities()){
             e.update(gc);
 
@@ -59,9 +62,14 @@ public class Game extends BasicGame{
                 map.updateCollisions();
             }
             else if(c.getc1().getDescription().equals("player") && c.getc2().getDescription().equals("star")){
-                babba.updateScore(10);
-                map.removeStar(c.getc2());
+                starToRemove = c.getc2();
             }
+        }
+
+        if(starToRemove != null){
+            map.removeEntity(starToRemove);
+            babba.updateScore(10);
+            System.out.println(babba.getScore());
         }
     }
 
@@ -74,7 +82,7 @@ public class Game extends BasicGame{
         for(Entity e : map.getEntities()){
             e.getSprite().draw(e.getX(), e.getY());
         }
-        //renderCollisionBoxes(g);
+        renderCollisionBoxes(g);
     }
 
     public void renderCollisionBoxes(Graphics g){

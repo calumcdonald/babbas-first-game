@@ -30,7 +30,7 @@ public abstract class Entity implements Collidable{
     public Collision checkCollision(List<Collidable> colliders){
         for(Collidable c : colliders){
             if(c.collidesWith(this)){
-                return new Collision(c, this);
+                return new Collision(this, c);
             }
         }
         return null;

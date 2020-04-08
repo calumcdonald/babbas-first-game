@@ -6,9 +6,11 @@ import entities.Entity;
 import entities.Star;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.tests.xml.Item;
 import org.newdawn.slick.tiled.TiledMap;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -96,8 +98,15 @@ public class Map {
         entities.add(entity);
     }
 
-    public void removeStar(Collidable star){
-        colliders.remove(star);
-        entities.remove(star);
+    public void removeEntity(Collidable c){
+        if(c != null){
+            colliders.remove(c);
+            Rectangle cBox = c.getCollisionBox();
+            for(Entity e : entities){
+                if(e.getX() == cBox.getX() && e.getY() == cBox.getY()){
+                    entities.remove(e);
+                }
+            }
+        }
     }
 }
