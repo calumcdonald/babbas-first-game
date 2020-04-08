@@ -57,12 +57,12 @@ public class Game extends BasicGame{
                 map.updateCollisions();
             }
 
-            Rectangle starCollision = e.checkStarCollision(map.getStarList());
-            if(starCollision != null){
-                babba.updateScore(10);
-                map.removeStar(starCollision);
-                System.out.println(babba.getScore());
-            }
+//            Rectangle starCollision = e.checkStarCollision(map.getStarList());
+//            if(starCollision != null){
+//                babba.updateScore(10);
+//                map.removeStar(starCollision);
+//                System.out.println(babba.getScore());
+//            }
         }
     }
 
@@ -79,15 +79,20 @@ public class Game extends BasicGame{
     }
 
     public void renderCollisionBoxes(Graphics g){
-        for(Rectangle wall: map.getCollisionList()){
-            g.draw(wall);
+        for(Collidable c : map.getColliders()){
+            g.draw(c.getRectangle());
         }
 
-        for(Rectangle portal : map.getPortalList()){
-            g.setColor(Color.magenta);
-            g.draw(portal);
-            g.setColor(Color.white);
-        }
+
+//        for(Rectangle wall: map.getCollisionList()){
+//            g.draw(wall);
+//        }
+
+//        for(Rectangle portal : map.getPortalList()){
+//            g.setColor(Color.magenta);
+//            g.draw(portal);
+//            g.setColor(Color.white);
+//        }
 
         for(Entity e : map.getEntities()){
             if(e instanceof Star){

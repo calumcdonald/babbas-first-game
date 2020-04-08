@@ -8,13 +8,16 @@ public class Star extends Entity{
     public static final int SCORE_VALUE = 10;
 
     private Animation sprite;
-    private int id;
 
-    public Star(float x, float y, int id) throws SlickException {
+    public Star(float x, float y){
         super(x, y);
-        this.id = id;
 
-        Image[] movement = {new Image("data/star1.png"), new Image("data/star2.png")};
+        Image[] movement = new Image[0];
+        try {
+            movement = new Image[]{new Image("data/star1.png"), new Image("data/star2.png")};
+        } catch (SlickException e) {
+            System.out.println("Could not load star images");
+        }
         int[] duration = {300, 300};
 
         sprite = new Animation(movement, duration, false);
@@ -33,9 +36,5 @@ public class Star extends Entity{
 
     public int getScoreValue(){
         return SCORE_VALUE;
-    }
-
-    private int getId(){
-        return id;
     }
 }
