@@ -1,18 +1,19 @@
+package entities;
+
+import collisions.Collidable;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-public class Star extends Entity{
+public class Star extends Entity implements Collidable {
 
     public static final int SCORE_VALUE = 10;
 
     private Animation sprite;
-    private int id;
 
-    public Star(float x, float y, int id) throws SlickException {
+    public Star(float x, float y) throws SlickException {
         super(x, y);
-        this.id = id;
 
         Image[] movement = {new Image("data/star1.png"), new Image("data/star2.png")};
         int[] duration = {300, 300};
@@ -35,7 +36,8 @@ public class Star extends Entity{
         return SCORE_VALUE;
     }
 
-    public int getId(){
-        return id;
+    @Override
+    public String getDescription() {
+        return "star";
     }
 }

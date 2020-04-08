@@ -1,28 +1,31 @@
+package map;
+
+import collisions.Collidable;
+import collisions.LabelledCollidable;
+import entities.Entity;
+import entities.Star;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Map {
     
-    public static final int SIZE = 32;
+    public static final int TILE_SIZE = 32;
 
     private TiledMap map;
     private int id;
-    private ArrayList<Entity> entities;
-    private ArrayList<Rectangle> collisionList;
-    private ArrayList<Rectangle> portalList;
-    private ArrayList<Star> starList;
+    private List<Entity> entities;
+    private List<Collidable> colliders;
 
     public Map(String mapPath, int id) throws SlickException {
         map = new TiledMap(mapPath);
         this.id = id;
         entities = new ArrayList<>();
-        collisionList = new ArrayList<>();
-        portalList = new ArrayList<>();
-        starList = new ArrayList<>();
+        colliders = new ArrayList<>();
         createStars();
         createCollisionLists();
     }
@@ -37,10 +40,14 @@ public class Map {
         for(int i = 0; i < map.getWidth(); i++){
             for(int j = 0; j < map.getHeight(); j++){
                 if(map.getTileId(i, j, tileLayer) == 2){
-                    collisionList.add(new Rectangle(i * SIZE, j * SIZE, SIZE, SIZE));
+                    Rectangle collisionBox = new Rectangle(i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+                    LabelledCollidable collider = new LabelledCollidable(collisionBox, "wall");
+                    colliders.add(collider);
                 }
                 else if(map.getTileId(i, j, tileLayer) == 3){
-                    portalList.add(new Rectangle(i * SIZE, j * SIZE, SIZE, SIZE));
+                    Rectangle collisionBox = new Rectangle(i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+                    LabelledCollidable collider = new LabelledCollidable(collisionBox, "portal");
+                    colliders.add(collider);
                 }
             }
         }
@@ -53,7 +60,7 @@ public class Map {
         for(int i = 0; i < map.getWidth(); i++){
             for(int j = 0; j < map.getHeight(); j++){
                 if(map.getTileId(i, j, tileLayer) == 1){
-                    grass.add(new Rectangle(i * SIZE, j * SIZE, SIZE, SIZE));
+                    grass.add(new Rectangle(i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE));
                 }
             }
         }
@@ -61,9 +68,11 @@ public class Map {
         for(int i = 0; i < 5; i++){
             int rand = new Random().nextInt(grass.size());
             Rectangle tile = grass.get(rand);
-            Star newStar = new Star(tile.getX() + 8, tile.getY() + 8, i);
+            Star newStar = new Star(tile.getX() + 8, tile.getY() + 8);
+            Rectangle collisionBox = new Rectangle(tile.getX() + 8, tile.getY() + 8, 16, 16);
+            LabelledCollidable collider = new LabelledCollidable(collisionBox, "star");
             entities.add(newStar);
-            starList.add(newStar);
+            colliders.add(collider);
         }
     }
 
@@ -71,20 +80,12 @@ public class Map {
         createCollisionLists();
     }
 
-    public ArrayList<Rectangle> getCollisionList(){
-        return collisionList;
+    public List<Collidable> getColliders(){
+        return colliders;
     }
 
-    public ArrayList<Rectangle> getPortalList(){
-        return portalList;
-    }
-
-    public ArrayList<Entity> getEntities(){
+    public List<Entity> getEntities(){
         return entities;
-    }
-
-    public ArrayList<Star> getStarList(){
-        return starList;
     }
 
     public int getId(){
@@ -95,20 +96,8 @@ public class Map {
         entities.add(entity);
     }
 
-    public void removeStar(Star star){
-        for(Star s : starList){
-            if(star.getId() == s.getId()){
-                starList.remove(star);
-            }
-        }
-
-        for(Entity e : entities){
-            if(e.getX() == star.getX() && e.getY() == star.getY() && e instanceof Star){
-                entities.remove(e);
-            }
-        }
-    }
-    public void removeEntity(Entity entity){
-        entities.remove(entity);
+    public void removeStar(Collidable star){
+        colliders.remove(star);
+        entities.remove(star);
     }
 }

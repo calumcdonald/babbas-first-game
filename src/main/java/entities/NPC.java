@@ -1,14 +1,19 @@
+package entities;
+
+import collisions.Collidable;
 import org.newdawn.slick.*;
 
-public class Player extends Entity {
+import java.util.Random;
+
+public class NPC extends Entity implements Collidable {
 
     private static final float SPEED = 0.1f;
-    private static final float SPRINT_SPEED = 0.3f;
-
+    
     private Animation sprite, up, down, left, right;
-    private int score = 0;
+    private float lastMoveTime = System.currentTimeMillis();
+    private int direction = 4;
 
-    public Player(float x, float y) throws SlickException{
+    public NPC(float x, float y) throws SlickException {
         super(x, y);
 
         Image[] movementUp = {new Image("data/up_1.png"), new Image("data/up_2.png")};
@@ -32,55 +37,41 @@ public class Player extends Entity {
 
     @Override
     public void update(GameContainer gc){
-        Input input = gc.getInput();
-        float speed;
         long delta = 1;
+        long currentTime = System.currentTimeMillis();
 
-        if(input.isKeyDown(Input.KEY_LSHIFT)){
-            speed = SPRINT_SPEED;
-        }
-        else{
-            speed = SPEED;
+        if(currentTime >= lastMoveTime + 3000) {
+            direction = new Random().nextInt(4);
         }
 
-        if(input.isKeyDown(Input.KEY_W)){
-            float newY = y - speed;
+        if(direction == 0){
+            float newY = y - SPEED;
             sprite = up;
             sprite.update(delta);
             nextCollisionBox.setLocation(x, newY);
         }
-        else if(input.isKeyDown(Input.KEY_S)){
-            float newY = y + speed;
+        else if(direction == 1){
+            float newY = y + SPEED;
             sprite = down;
             sprite.update(delta);
             nextCollisionBox.setLocation(x, newY);
         }
-        else if(input.isKeyDown(Input.KEY_A)){
-            float newX = x - speed;
+        else if(direction == 2){
+            float newX = x - SPEED;
             sprite = left;
             sprite.update(delta);
             nextCollisionBox.setLocation(newX, y);
         }
-        else if(input.isKeyDown(Input.KEY_D)){
-            float newX = x + speed;
+        else if(direction == 3){
+            float newX = x + SPEED;
             sprite = right;
             sprite.update(delta);
             nextCollisionBox.setLocation(newX, y);
         }
-        else if(input.isKeyDown(Input.KEY_W) && input.isKeyDown(Input.KEY_D)){
-            float newX = x + speed;
-            float newY = y + speed;
-            sprite = right;
-            sprite.update(delta);
-            nextCollisionBox.setLocation(newX, newY);
-        }
     }
 
-    public void updateScore(int amount){
-        score+=amount;
-    }
-
-    public int getScore(){
-        return score;
+    @Override
+    public String getDescription() {
+        return "npc";
     }
 }

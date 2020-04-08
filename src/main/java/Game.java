@@ -1,15 +1,18 @@
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import collisions.Collidable;
+import collisions.Collision;
+import entities.Entity;
+import entities.Player;
+import map.Map;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.geom.Rectangle;
 
 public class Game extends BasicGame{
 
     public static final int SCALE = 2;
-    public static final int SIZE = 32;
-    public static final int SPRITE_SIZE = 16;
+    public static final int TILE_SIZE = 32;
 
     private Map level1, level2, level3, map;
     private Player babba;
@@ -25,7 +28,7 @@ public class Game extends BasicGame{
         level3 = new Map("data/babba3.tmx", 2);
         map = level1;
 
-        babba = new Player(SIZE + 8, SIZE + 8);
+        babba = new Player(TILE_SIZE + 8, TILE_SIZE + 8);
         level1.addEntity(babba);
         level2.addEntity(babba);
         level3.addEntity(babba);
@@ -36,31 +39,28 @@ public class Game extends BasicGame{
         for(Entity e : map.getEntities()){
             e.update(gc);
 
-            if(!e.checkCollision(map.getCollisionList())) {
+            Collision c = e.checkCollision(map.getColliders());
+            if(c == null) {
                 e.setNextLocation();
             }
-
-            Rectangle portal = e.checkPortalCollision(map.getPortalList());
-            if(portal != null){
+            else if(c.getc1().getDescription().equals("player") && c.getc2().getDescription().equals("portal")){
                 if(map.getId() == 0){
                     map = level2;
-                    e.setLocation(SIZE * 8 + 8, SIZE + 8);
+                    e.setLocation(TILE_SIZE * 8 + 8, TILE_SIZE + 8);
                 }
                 else if(map.getId() == 1){
                     map = level3;
-                    e.setLocation(SIZE + 8, SIZE + 8);
+                    e.setLocation(TILE_SIZE + 8, TILE_SIZE + 8);
                 }
                 else if(map.getId() == 2){
                     map = level1;
-                    e.setLocation(SIZE + 8, SIZE + 8);
+                    e.setLocation(TILE_SIZE + 8, TILE_SIZE + 8);
                 }
                 map.updateCollisions();
             }
-
-            Star star = e.checkStarCollision(map.getStarList());
-            if(star != null){
+            else if(c.getc1().getDescription().equals("player") && c.getc2().getDescription().equals("star")){
                 babba.updateScore(10);
-                map.removeStar(star);
+                map.removeStar(c.getc2());
             }
         }
     }
@@ -74,31 +74,30 @@ public class Game extends BasicGame{
         for(Entity e : map.getEntities()){
             e.getSprite().draw(e.getX(), e.getY());
         }
-        renderCollisionBoxes(g);
+        //renderCollisionBoxes(g);
     }
 
     public void renderCollisionBoxes(Graphics g){
-        for(Rectangle wall: map.getCollisionList()){
-            g.draw(wall);
-        }
-
-        for(Rectangle portal : map.getPortalList()){
-            g.setColor(Color.magenta);
-            g.draw(portal);
+        for(Collidable wall: map.getColliders()){
+            if(wall.getDescription().equals("wall")){
+                g.setColor(Color.white);
+            }
+            else if(wall.getDescription().equals("portal")){
+                g.setColor(Color.magenta);
+            }
+            g.draw(wall.getCollisionBox());
             g.setColor(Color.white);
         }
 
         for(Entity e : map.getEntities()){
-            if(e instanceof Star){
+            if(e.getDescription().equals("star")){
                 g.setColor(Color.yellow);
-                g.draw(e.getCollisionBox());
-                g.setColor(Color.white);
             }
-            else if(e instanceof Player) {
+            else if(e.getDescription().equals("player")) {
                 g.setColor(Color.red);
-                g.draw(e.getCollisionBox());
-                g.setColor(Color.white);
             }
+            g.draw(e.getCollisionBox());
+            g.setColor(Color.white);
         }
     }
 
