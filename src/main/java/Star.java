@@ -35,7 +35,7 @@ public class Star extends Entity{
         return SCORE_VALUE;
     }
 
-    private int getId(){
+    public int getId(){
         return id;
     }
 }

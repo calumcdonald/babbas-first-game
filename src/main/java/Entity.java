@@ -44,11 +44,12 @@ public abstract class Entity {
         return null;
     }
 
-    public Rectangle checkStarCollision(List<Rectangle> starList){
-        for(Rectangle rectangle : starList) {
-            if(nextCollisionBox.intersects(rectangle) && this instanceof Player){
-                if(!rectangle.equals(nextCollisionBox) && !rectangle.equals(collisionBox)) {
-                    return rectangle;
+    public Star checkStarCollision(List<Star> starList){
+        for(Star star : starList) {
+            Rectangle starCollision = star.getCollisionBox();
+            if(nextCollisionBox.intersects(starCollision) && this instanceof Player){
+                if(!starCollision.equals(nextCollisionBox) && !starCollision.equals(collisionBox)) {
+                    return star;
                 }
             }
         }

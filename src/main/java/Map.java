@@ -14,7 +14,7 @@ public class Map {
     private ArrayList<Entity> entities;
     private ArrayList<Rectangle> collisionList;
     private ArrayList<Rectangle> portalList;
-    private ArrayList<Rectangle> starList;
+    private ArrayList<Star> starList;
 
     public Map(String mapPath, int id) throws SlickException {
         map = new TiledMap(mapPath);
@@ -44,12 +44,6 @@ public class Map {
                 }
             }
         }
-
-        for(Entity e : entities){
-            if(e instanceof Star){
-                starList.add(new Rectangle(e.getX() + 8, e.getY() + 8, 16, 16));
-            }
-        }
     }
 
     public void createStars() throws SlickException{
@@ -67,7 +61,9 @@ public class Map {
         for(int i = 0; i < 5; i++){
             int rand = new Random().nextInt(grass.size());
             Rectangle tile = grass.get(rand);
-            entities.add(new Star(tile.getX() + 8, tile.getY() + 8, i));
+            Star newStar = new Star(tile.getX() + 8, tile.getY() + 8, i);
+            entities.add(newStar);
+            starList.add(newStar);
         }
     }
 
@@ -83,32 +79,35 @@ public class Map {
         return portalList;
     }
 
-    public ArrayList<Rectangle> getStarList(){
-        return starList;
-    }
-
     public ArrayList<Entity> getEntities(){
         return entities;
+    }
+
+    public ArrayList<Star> getStarList(){
+        return starList;
     }
 
     public int getId(){
         return id;
     }
 
-    public void removeStar(Rectangle starCollision){
-        for(Entity e : entities){
-            System.out.println("e " + e.getX() + ", " + e.getY());
-            System.out.println("c " + starCollision.getX() + ", " + starCollision.getY());
-            if(e.getX() + 8 == starCollision.getX() && e.getY() + 8 == starCollision.getY()){
-                entities.remove(e);
-            }
-        }
-    }
-
     public void addEntity(Entity entity){
         entities.add(entity);
     }
 
+    public void removeStar(Star star){
+        for(Star s : starList){
+            if(star.getId() == s.getId()){
+                starList.remove(star);
+            }
+        }
+
+        for(Entity e : entities){
+            if(e.getX() == star.getX() && e.getY() == star.getY() && e instanceof Star){
+                entities.remove(e);
+            }
+        }
+    }
     public void removeEntity(Entity entity){
         entities.remove(entity);
     }

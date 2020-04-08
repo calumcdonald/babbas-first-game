@@ -57,11 +57,10 @@ public class Game extends BasicGame{
                 map.updateCollisions();
             }
 
-            Rectangle starCollision = e.checkStarCollision(map.getStarList());
-            if(starCollision != null){
+            Star star = e.checkStarCollision(map.getStarList());
+            if(star != null){
                 babba.updateScore(10);
-                map.removeStar(starCollision);
-                System.out.println(babba.getScore());
+                map.removeStar(star);
             }
         }
     }
