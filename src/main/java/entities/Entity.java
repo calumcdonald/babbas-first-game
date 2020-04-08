@@ -1,10 +1,15 @@
+package entities;
+
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Game;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.geom.Rectangle;
 
 import java.util.List;
 
 public abstract class Entity {
+
+    public static final int SPRITE_SIZE = 16;
 
     protected Rectangle collisionBox;
     protected Rectangle nextCollisionBox;
@@ -14,8 +19,8 @@ public abstract class Entity {
         this.x = x;
         this.y = y;
 
-        collisionBox = new Rectangle(x, y, Game.SPRITE_SIZE, Game.SPRITE_SIZE);
-        nextCollisionBox = new Rectangle(x, y, Game.SPRITE_SIZE, Game.SPRITE_SIZE);
+        collisionBox = new Rectangle(x, y, SPRITE_SIZE, SPRITE_SIZE);
+        nextCollisionBox = new Rectangle(x, y, SPRITE_SIZE, SPRITE_SIZE);
     }
 
     public Rectangle getCollisionBox(){

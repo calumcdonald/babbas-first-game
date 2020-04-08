@@ -1,6 +1,8 @@
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import entities.Entity;
+import entities.Player;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
@@ -9,7 +11,6 @@ public class Game extends BasicGame{
 
     public static final int SCALE = 2;
     public static final int SIZE = 32;
-    public static final int SPRITE_SIZE = 16;
 
     private Map level1, level2, level3, map;
     private Player babba;

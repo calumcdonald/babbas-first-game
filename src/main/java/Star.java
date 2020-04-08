@@ -1,9 +1,10 @@
+import entities.Entity;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-public class Star extends Entity{
+public class Star extends Entity {
 
     public static final int SCORE_VALUE = 10;
 
