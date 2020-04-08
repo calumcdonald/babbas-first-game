@@ -1,6 +1,7 @@
 package entities;
 
 import collisions.Collidable;
+import collisions.Collision;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Game;
 import org.newdawn.slick.GameContainer;
@@ -28,29 +29,18 @@ public abstract class Entity implements Collidable{
         return collisionBox;
     }
 
-    public boolean checkCollision(List<Collidable> colliders){
+    public Collision checkCollision(List<Collidable> colliders){
         for(Collidable c : colliders){
-            if(c.collidesWith(this) && c.getDescription().equals("wall")){
-                return true;
+            if(c.collidesWith(this)){
+                return new Collision(this, c);
             }
         }
-        return false;
+        return null;
     }
 
     public boolean collidesWith(Collidable c) {
         return c.collidesWith(this);
     }
-
-    //    public boolean checkCollision(List<Rectangle> collisionList){
-//        for(Rectangle rectangle : collisionList) {
-//            if(nextCollisionBox.intersects(rectangle)){
-//                if(!rectangle.equals(nextCollisionBox) && !rectangle.equals(collisionBox)) {
-//                    return true;
-//                }
-//            }
-//        }
-//        return false;
-//    }
 
     public Rectangle checkPortalCollision(List<Rectangle> portalList){
         for(Rectangle rectangle : portalList) {

@@ -2,6 +2,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import collisions.Collidable;
+import collisions.Collision;
 import entities.Entity;
 import entities.Player;
 import entities.Star;
@@ -40,15 +41,13 @@ public class Game extends BasicGame{
         for(Entity e : map.getEntities()){
             e.update(gc);
 
-//            if(!e.checkCollision(map.getCollisionList())) {
-//                e.setNextLocation();
-//            }
-            if(!e.checkCollision(map.getColliders())) {
+            Collision c = e.checkCollision(map.getColliders());
+            if(c == null) {
                 e.setNextLocation();
             }
-
-            Rectangle portal = e.checkPortalCollision(map.getPortalList());
-            if(portal != null){
+            else if(c.getOne().getDescription().equals("player") && c.getTwo().getDescription().equals("portal")){
+            //Rectangle portal = e.checkPortalCollision(map.getPortalList());
+            //if(portal != null){
                 if(map.getId() == 0){
                     map = level2;
                     e.setLocation(SIZE * 8 + 8, SIZE + 8);

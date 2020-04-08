@@ -19,8 +19,6 @@ public class Map {
     private TiledMap map;
     private int id;
     private ArrayList<Entity> entities;
-    private ArrayList<Rectangle> collisionList;
-    private ArrayList<Rectangle> portalList;
     private ArrayList<Star> starList;
     private List<Collidable> colliders;
 
@@ -28,8 +26,6 @@ public class Map {
         map = new TiledMap(mapPath);
         this.id = id;
         entities = new ArrayList<>();
-        collisionList = new ArrayList<>();
-        portalList = new ArrayList<>();
         starList = new ArrayList<>();
 
         colliders = new ArrayList<>();
@@ -48,11 +44,9 @@ public class Map {
         for(int i = 0; i < map.getWidth(); i++){
             for(int j = 0; j < map.getHeight(); j++){
                 if(map.getTileId(i, j, tileLayer) == 2){
-                    collisionList.add(new Rectangle(i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE));
                     colliders.add(new LabelledCollidable(i * TILE_SIZE, j * TILE_SIZE, "wall"));
                 }
                 else if(map.getTileId(i, j, tileLayer) == 3){
-                    portalList.add(new Rectangle(i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE));
                     colliders.add(new LabelledCollidable(i * TILE_SIZE, j * TILE_SIZE, "portal"));
                 }
             }
@@ -86,18 +80,6 @@ public class Map {
 
     public void updateCollisions(){
         createCollisionLists();
-    }
-
-    public ArrayList<Rectangle> getCollisionList(){
-        return collisionList;
-    }
-
-    public ArrayList<Rectangle> getPortalList(){
-        return portalList;
-    }
-
-    public ArrayList<Star> getStarList(){
-        return starList;
     }
 
     public ArrayList<Entity> getEntities(){
