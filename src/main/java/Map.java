@@ -22,9 +22,9 @@ public class Map {
         entities = new ArrayList<>();
         collisionList = new ArrayList<>();
         portalList = new ArrayList<>();
+        starList = new ArrayList<>();
+        createStars();
         createCollisionLists();
-
-        starList = createStars();
     }
 
     public TiledMap getMap(){
@@ -44,12 +44,16 @@ public class Map {
                 }
             }
         }
+
+        for(Entity e : entities){
+            if(e instanceof Star){
+                starList.add(new Rectangle(e.getX() + 8, e.getY() + 8, 16, 16));
+            }
+        }
     }
 
-    public ArrayList<Rectangle> createStars() throws SlickException{
+    public void createStars() throws SlickException{
         ArrayList<Rectangle> grass = new ArrayList<>();
-        starList = new ArrayList<>();
-
         int tileLayer = map.getLayerIndex("map");
 
         for(int i = 0; i < map.getWidth(); i++){
@@ -63,10 +67,8 @@ public class Map {
         for(int i = 0; i < 5; i++){
             int rand = new Random().nextInt(grass.size());
             Rectangle tile = grass.get(rand);
-            entities.add(new Star(tile.getX() + 8, tile.getY() + 8));
-            starList.add(new Rectangle(tile.getX() + 8, tile.getY() + 8, 16, 16));
+            entities.add(new Star(tile.getX() + 8, tile.getY() + 8, i));
         }
-        return starList;
     }
 
     public void updateCollisions(){

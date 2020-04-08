@@ -12,6 +12,7 @@ public class Game extends BasicGame{
     public static final int SPRITE_SIZE = 16;
 
     private Map level1, level2, level3, map;
+    private Player babba;
 
     public Game(String gamename){
         super(gamename);
@@ -24,7 +25,7 @@ public class Game extends BasicGame{
         level3 = new Map("data/babba3.tmx", 2);
         map = level1;
 
-        Player babba = new Player(SIZE + 8, SIZE + 8);
+        babba = new Player(SIZE + 8, SIZE + 8);
         level1.addEntity(babba);
         level2.addEntity(babba);
         level3.addEntity(babba);
@@ -58,7 +59,9 @@ public class Game extends BasicGame{
 
             Rectangle star = e.checkStarCollision(map.getStarList());
             if(star != null){
-                
+                babba.updateScore(10);
+                map.removeEntity();
+                System.out.println(babba.getScore());
             }
         }
     }

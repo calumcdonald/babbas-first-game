@@ -56,8 +56,8 @@ public abstract class Entity {
     }
 
     public void setNextLocation(){
-        this.x = nextCollisionBox.getX();
-        this.y = nextCollisionBox.getY();
+        x = nextCollisionBox.getX();
+        y = nextCollisionBox.getY();
         collisionBox = nextCollisionBox;
     }
 
