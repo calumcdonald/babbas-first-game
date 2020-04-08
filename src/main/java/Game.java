@@ -5,7 +5,6 @@ import collisions.Collidable;
 import collisions.Collision;
 import entities.Entity;
 import entities.Player;
-import entities.Star;
 import map.Map;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;

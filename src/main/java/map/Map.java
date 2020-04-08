@@ -102,11 +102,7 @@ public class Map {
         if(c != null){
             colliders.remove(c);
             Rectangle cBox = c.getCollisionBox();
-            for(Entity e : entities){
-                if(e.getX() == cBox.getX() && e.getY() == cBox.getY()){
-                    entities.remove(e);
-                }
-            }
+            entities.removeIf(e -> e.getX() == cBox.getX() && e.getY() == cBox.getY());
         }
     }
 }
