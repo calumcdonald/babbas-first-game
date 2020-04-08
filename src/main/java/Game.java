@@ -29,6 +29,7 @@ public class Game extends BasicGame{
         map = level1;
 
         babba = new Player(TILE_SIZE + 8, TILE_SIZE + 8);
+
         level1.addEntity(babba);
         level2.addEntity(babba);
         level3.addEntity(babba);
@@ -67,8 +68,6 @@ public class Game extends BasicGame{
 
         if(starToRemove != null){
             map.removeEntity(starToRemove);
-            babba.updateScore(10);
-            System.out.println(babba.getScore());
         }
     }
 
@@ -81,7 +80,7 @@ public class Game extends BasicGame{
         for(Entity e : map.getEntities()){
             e.getSprite().draw(e.getX(), e.getY());
         }
-        renderCollisionBoxes(g);
+        //renderCollisionBoxes(g);
     }
 
     public void renderCollisionBoxes(Graphics g){

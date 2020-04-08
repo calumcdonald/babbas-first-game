@@ -3,7 +3,6 @@ package entities;
 import collisions.Collidable;
 import collisions.Collision;
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.Game;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.geom.Rectangle;
 

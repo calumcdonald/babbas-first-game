@@ -6,11 +6,9 @@ import entities.Entity;
 import entities.Star;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.tests.xml.Item;
 import org.newdawn.slick.tiled.TiledMap;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -62,7 +60,10 @@ public class Map {
         for(int i = 0; i < map.getWidth(); i++){
             for(int j = 0; j < map.getHeight(); j++){
                 if(map.getTileId(i, j, tileLayer) == 1){
-                    grass.add(new Rectangle(i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE));
+                    Rectangle tile = new Rectangle(i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+                    if(tile.getX() != TILE_SIZE && tile.getY() != TILE_SIZE && tile.getX() != TILE_SIZE * 8 && tile.getY() != tile.getY() * 8) {
+                        grass.add(tile);
+                    }
                 }
             }
         }
