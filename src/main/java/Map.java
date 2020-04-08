@@ -95,6 +95,14 @@ public class Map {
         return id;
     }
 
+    public void removeStar(Rectangle starCollision){
+        for(Entity e : entities){
+            if(e.getX() == starCollision.getX() && e.getY() == starCollision.getY()){
+                entities.remove(e);
+            }
+        }
+    }
+
     public void addEntity(Entity entity){
         entities.add(entity);
     }
