@@ -61,7 +61,7 @@ public class Map {
             for(int j = 0; j < map.getHeight(); j++){
                 if(map.getTileId(i, j, tileLayer) == 1){
                     Rectangle tile = new Rectangle(i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE);
-                    if(tile.getX() != TILE_SIZE && tile.getY() != TILE_SIZE && tile.getX() != TILE_SIZE * 8 && tile.getY() != tile.getY() * 8) {
+                    if(!(tile.getX() == TILE_SIZE && tile.getY() == TILE_SIZE) && !(tile.getX() == TILE_SIZE * 8 && tile.getY() == tile.getY())) {
                         grass.add(tile);
                     }
                 }
