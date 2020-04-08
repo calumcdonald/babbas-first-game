@@ -1,3 +1,5 @@
+package entities;
+
 import entities.Entity;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
@@ -37,5 +39,9 @@ public class Star extends Entity {
 
     public int getScoreValue(){
         return SCORE_VALUE;
+    }
+
+    public String getDescription(){
+        return "star";
     }
 }

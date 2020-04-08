@@ -1,8 +1,11 @@
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import collisions.Collidable;
 import entities.Entity;
 import entities.Player;
+import entities.Star;
+import map.Map;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
@@ -37,7 +40,10 @@ public class Game extends BasicGame{
         for(Entity e : map.getEntities()){
             e.update(gc);
 
-            if(!e.checkCollision(map.getCollisionList())) {
+//            if(!e.checkCollision(map.getCollisionList())) {
+//                e.setNextLocation();
+//            }
+            if(!e.checkCollision(map.getColliders())) {
                 e.setNextLocation();
             }
 

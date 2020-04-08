@@ -1,5 +1,6 @@
 package entities;
 
+import collisions.Collidable;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Game;
 import org.newdawn.slick.GameContainer;
@@ -7,7 +8,7 @@ import org.newdawn.slick.geom.Rectangle;
 
 import java.util.List;
 
-public abstract class Entity {
+public abstract class Entity implements Collidable{
 
     public static final int SPRITE_SIZE = 16;
 
@@ -27,16 +28,29 @@ public abstract class Entity {
         return collisionBox;
     }
 
-    public boolean checkCollision(List<Rectangle> collisionList){
-        for(Rectangle rectangle : collisionList) {
-            if(nextCollisionBox.intersects(rectangle)){
-                if(!rectangle.equals(nextCollisionBox) && !rectangle.equals(collisionBox)) {
-                    return true;
-                }
+    public boolean checkCollision(List<Collidable> colliders){
+        for(Collidable c : colliders){
+            if(c.collidesWith(this) && c.getDescription().equals("wall")){
+                return true;
             }
         }
         return false;
     }
+
+    public boolean collidesWith(Collidable c) {
+        return c.collidesWith(this);
+    }
+
+    //    public boolean checkCollision(List<Rectangle> collisionList){
+//        for(Rectangle rectangle : collisionList) {
+//            if(nextCollisionBox.intersects(rectangle)){
+//                if(!rectangle.equals(nextCollisionBox) && !rectangle.equals(collisionBox)) {
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+//    }
 
     public Rectangle checkPortalCollision(List<Rectangle> portalList){
         for(Rectangle rectangle : portalList) {
@@ -82,4 +96,8 @@ public abstract class Entity {
     public abstract void update(GameContainer gc);
 
     public abstract Animation getSprite();
+
+    public Rectangle getRectangle(){
+        return collisionBox;
+    }
 }

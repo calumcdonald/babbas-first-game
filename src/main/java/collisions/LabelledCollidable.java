@@ -1,6 +1,10 @@
+package collisions;
+
+import collisions.Collidable;
+import map.Map;
 import org.newdawn.slick.geom.Rectangle;
 
-public class LabelledCollidable implements Collidable{
+public class LabelledCollidable implements Collidable {
 
     private Rectangle rect;
     private String description;

@@ -1,3 +1,5 @@
+package collisions;
+
 import org.newdawn.slick.geom.Rectangle;
 
 public interface Collidable {

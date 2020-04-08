@@ -69,4 +69,9 @@ public class NPC extends Entity {
             nextCollisionBox.setLocation(newX, y);
         }
     }
+
+    @Override
+    public String getDescription() {
+        return "npc";
+    }
 }

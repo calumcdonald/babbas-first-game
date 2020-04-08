@@ -86,4 +86,8 @@ public class Player extends Entity {
     public int getScore(){
         return score;
     }
+
+    public String getDescription(){
+        return "player";
+    }
 }

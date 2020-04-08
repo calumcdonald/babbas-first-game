@@ -1,4 +1,9 @@
+package map;
+
+import collisions.Collidable;
+import collisions.LabelledCollidable;
 import entities.Entity;
+import entities.Star;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
