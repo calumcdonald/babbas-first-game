@@ -97,7 +97,9 @@ public class Map {
 
     public void removeStar(Rectangle starCollision){
         for(Entity e : entities){
-            if(e.getX() == starCollision.getX() && e.getY() == starCollision.getY()){
+            System.out.println("e " + e.getX() + ", " + e.getY());
+            System.out.println("c " + starCollision.getX() + ", " + starCollision.getY());
+            if(e.getX() + 8 == starCollision.getX() && e.getY() + 8 == starCollision.getY()){
                 entities.remove(e);
             }
         }
