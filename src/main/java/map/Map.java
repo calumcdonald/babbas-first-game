@@ -54,7 +54,7 @@ public class Map {
     }
 
     public void createStars() throws SlickException{
-        ArrayList<Rectangle> grass = new ArrayList<>();
+        ArrayList<Rectangle> invalidTiles = new ArrayList<>();
         int tileLayer = map.getLayerIndex("map");
 
         for(int i = 0; i < map.getWidth(); i++){
@@ -62,16 +62,16 @@ public class Map {
                 if(map.getTileId(i, j, tileLayer) == 1){
                     Rectangle tile = new Rectangle(i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE);
                     if(!(tile.getX() == TILE_SIZE && tile.getY() == TILE_SIZE) && !(tile.getX() == TILE_SIZE * 8 && tile.getY() == tile.getY())) {
-                        grass.add(tile);
+                        invalidTiles.add(tile);
                     }
                 }
             }
         }
 
         for(int i = 0; i < 5; i++){
-            int rand = new Random().nextInt(grass.size());
-            Rectangle tile = grass.get(rand);
-            grass.remove(tile);
+            int rand = new Random().nextInt(invalidTiles.size());
+            Rectangle tile = invalidTiles.get(rand);
+            invalidTiles.remove(tile);
             Star newStar = new Star(tile.getX() + 8, tile.getY() + 8);
             Rectangle collisionBox = new Rectangle(tile.getX() + 8, tile.getY() + 8, 16, 16);
             LabelledCollidable collider = new LabelledCollidable(collisionBox, "star");

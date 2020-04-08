@@ -56,8 +56,13 @@ public class Game extends BasicGame{
                     e.setLocation(TILE_SIZE + 8, TILE_SIZE + 8);
                 }
                 else if(map.getId() == 2){
-                    map = level1;
-                    e.setLocation(TILE_SIZE + 8, TILE_SIZE + 8);
+                    if(babba.getScore() != 15) {
+                        map = level1;
+                        e.setLocation(TILE_SIZE + 8, TILE_SIZE + 8);
+                    }
+                    else{
+                        gc.exit();
+                    }
                 }
                 map.updateCollisions();
             }
@@ -67,6 +72,7 @@ public class Game extends BasicGame{
         }
 
         if(starToRemove != null){
+            babba.updateScore(1);
             map.removeEntity(starToRemove);
         }
     }
