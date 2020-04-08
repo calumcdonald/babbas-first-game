@@ -79,7 +79,7 @@ public class Player extends Entity {
         }
     }
 
-    public void updateScore(int amount){
+    public void addToScore(int amount){
         score+=amount;
     }
 

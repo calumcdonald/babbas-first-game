@@ -3,7 +3,6 @@ package map;
 import collisions.Collidable;
 import collisions.LabelledCollidable;
 import entities.Entity;
-import entities.Star;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.tiled.TiledMap;
@@ -19,14 +18,12 @@ public class Map {
     private TiledMap map;
     private int id;
     private ArrayList<Entity> entities;
-    private ArrayList<Star> starList;
     private List<Collidable> colliders;
 
     public Map(String mapPath, int id) throws SlickException {
         map = new TiledMap(mapPath);
         this.id = id;
         entities = new ArrayList<>();
-        starList = new ArrayList<>();
 
         colliders = new ArrayList<>();
 
@@ -44,22 +41,20 @@ public class Map {
         for(int i = 0; i < map.getWidth(); i++){
             for(int j = 0; j < map.getHeight(); j++){
                 if(map.getTileId(i, j, tileLayer) == 2){
-                    colliders.add(new LabelledCollidable(i * TILE_SIZE, j * TILE_SIZE, "wall"));
+                    colliders.add(new LabelledCollidable(
+                            new Rectangle(i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE),
+                            "wall"));
                 }
                 else if(map.getTileId(i, j, tileLayer) == 3){
-                    colliders.add(new LabelledCollidable(i * TILE_SIZE, j * TILE_SIZE, "portal"));
+                    colliders.add(new LabelledCollidable(
+                            new Rectangle(i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE),
+                            "portal"));
                 }
-            }
-        }
-
-        for(Entity e : entities){
-            if(e instanceof Star){
-                starList.add(new Star(e.getX() + 8, e.getY() + 8));
             }
         }
     }
 
-    public void createStars() throws SlickException{
+    public void createStars(){
         ArrayList<Rectangle> grass = new ArrayList<>();
         int tileLayer = map.getLayerIndex("map");
 
@@ -74,7 +69,8 @@ public class Map {
         for(int i = 0; i < 5; i++){
             int rand = new Random().nextInt(grass.size());
             Rectangle tile = grass.get(rand);
-            entities.add(new Star(tile.getX() + 8, tile.getY() + 8));
+            colliders.add(new LabelledCollidable(new Rectangle(tile.getX() + 8, tile.getY() + 8, 16, 16),
+                    "star"));
         }
     }
 
@@ -90,17 +86,13 @@ public class Map {
         return id;
     }
 
-    public void removeStar(Rectangle starCollision){
-        starList.remove(starCollision);
-        entities.remove(starCollision);
+    public void removeStar(Collidable star){
+        entities.remove(star);
+        colliders.remove(star);
     }
 
     public void addEntity(Entity entity){
         entities.add(entity);
-    }
-
-    public void removeEntity(Entity entity){
-        entities.remove(entity);
     }
 
     public List<Collidable> getColliders(){

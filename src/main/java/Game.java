@@ -5,11 +5,9 @@ import collisions.Collidable;
 import collisions.Collision;
 import entities.Entity;
 import entities.Player;
-import entities.Star;
 import map.Map;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.geom.Rectangle;
 
 public class Game extends BasicGame{
 
@@ -18,6 +16,7 @@ public class Game extends BasicGame{
 
     private Map level1, level2, level3, map;
     private Player babba;
+    private Image starImage;
 
     public Game(String gamename){
         super(gamename);
@@ -29,6 +28,8 @@ public class Game extends BasicGame{
         level2 = new Map("data/babba2.tmx", 1);
         level3 = new Map("data/babba3.tmx", 2);
         map = level1;
+
+        starImage = new Image("data/star1.png");
 
         babba = new Player(SIZE + 8, SIZE + 8);
         level1.addEntity(babba);
@@ -46,8 +47,6 @@ public class Game extends BasicGame{
                 e.setNextLocation();
             }
             else if(c.getOne().getDescription().equals("player") && c.getTwo().getDescription().equals("portal")){
-            //Rectangle portal = e.checkPortalCollision(map.getPortalList());
-            //if(portal != null){
                 if(map.getId() == 0){
                     map = level2;
                     e.setLocation(SIZE * 8 + 8, SIZE + 8);
@@ -62,13 +61,11 @@ public class Game extends BasicGame{
                 }
                 map.updateCollisions();
             }
-
-//            Rectangle starCollision = e.checkStarCollision(map.getStarList());
-//            if(starCollision != null){
-//                babba.updateScore(10);
-//                map.removeStar(starCollision);
-//                System.out.println(babba.getScore());
-//            }
+            else if(c.getOne().getDescription().equals("player") && c.getTwo().getDescription().equals("star")){
+                map.removeStar(c.getTwo());
+                babba.addToScore(10);
+                System.out.println(babba.getScore());
+            }
         }
     }
 
@@ -81,36 +78,16 @@ public class Game extends BasicGame{
         for(Entity e : map.getEntities()){
             e.getSprite().draw(e.getX(), e.getY());
         }
+        for(Collidable c : map.getColliders())
+            if(c.getDescription().equals("star"))
+                g.drawImage(starImage, c.getRectangle().getX(), c.getRectangle().getY());
+
         renderCollisionBoxes(g);
     }
 
     public void renderCollisionBoxes(Graphics g){
         for(Collidable c : map.getColliders()){
             g.draw(c.getRectangle());
-        }
-
-
-//        for(Rectangle wall: map.getCollisionList()){
-//            g.draw(wall);
-//        }
-
-//        for(Rectangle portal : map.getPortalList()){
-//            g.setColor(Color.magenta);
-//            g.draw(portal);
-//            g.setColor(Color.white);
-//        }
-
-        for(Entity e : map.getEntities()){
-            if(e instanceof Star){
-                g.setColor(Color.yellow);
-                g.draw(e.getCollisionBox());
-                g.setColor(Color.white);
-            }
-            else if(e instanceof Player) {
-                g.setColor(Color.red);
-                g.draw(e.getCollisionBox());
-                g.setColor(Color.white);
-            }
         }
     }
 

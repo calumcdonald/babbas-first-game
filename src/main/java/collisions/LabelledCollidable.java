@@ -1,7 +1,5 @@
 package collisions;
 
-import collisions.Collidable;
-import map.Map;
 import org.newdawn.slick.geom.Rectangle;
 
 public class LabelledCollidable implements Collidable {
@@ -9,8 +7,8 @@ public class LabelledCollidable implements Collidable {
     private Rectangle rect;
     private String description;
 
-    public LabelledCollidable(float x, float y, String description){
-        rect = new Rectangle(x, y, Map.TILE_SIZE, Map.TILE_SIZE);
+    public LabelledCollidable(Rectangle rect, String description){
+        this.rect = rect;
         this.description = description;
     }
 

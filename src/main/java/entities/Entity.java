@@ -42,28 +42,6 @@ public abstract class Entity implements Collidable{
         return c.collidesWith(this);
     }
 
-    public Rectangle checkPortalCollision(List<Rectangle> portalList){
-        for(Rectangle rectangle : portalList) {
-            if(nextCollisionBox.intersects(rectangle) && this instanceof Player){
-                if(!rectangle.equals(nextCollisionBox) && !rectangle.equals(collisionBox)) {
-                    return rectangle;
-                }
-            }
-        }
-        return null;
-    }
-
-    public Rectangle checkStarCollision(List<Rectangle> starList){
-        for(Rectangle rectangle : starList) {
-            if(nextCollisionBox.intersects(rectangle) && this instanceof Player){
-                if(!rectangle.equals(nextCollisionBox) && !rectangle.equals(collisionBox)) {
-                    return rectangle;
-                }
-            }
-        }
-        return null;
-    }
-
     public void setNextLocation(){
         x = nextCollisionBox.getX();
         y = nextCollisionBox.getY();
