@@ -11,7 +11,7 @@ public class Game extends BasicGame{
     public static final int SIZE = 32;
     public static final int SPRITE_SIZE = 16;
 
-    private Map map;
+    private Map level1, level2, level3, map;
 
     public Game(String gamename){
         super(gamename);
@@ -19,10 +19,15 @@ public class Game extends BasicGame{
 
     @Override
     public void init(GameContainer gc) throws SlickException {
-        map = new Map("data/babba.tmx");
+        level1 = new Map("data/babba.tmx", 0);
+        level2 = new Map("data/babba2.tmx", 1);
+        level3 = new Map("data/babba3.tmx", 2);
+        map = level1;
 
         Player babba = new Player(SIZE + 8, SIZE + 8);
-        map.addEntity(babba);
+        level1.addEntity(babba);
+        level2.addEntity(babba);
+        level3.addEntity(babba);
     }
 
     @Override
@@ -33,13 +38,27 @@ public class Game extends BasicGame{
             if(!e.checkCollision(map.getCollisionList())) {
                 e.setNextLocation();
             }
-            
-            if(e.checkPortalCollision(map.getPortalList()) != null){
+
+            Rectangle portal = e.checkPortalCollision(map.getPortalList());
+            if(portal != null){
+                if(map.getId() == 0){
+                    map = level2;
+                    e.setLocation(SIZE * 8 + 8, SIZE + 8);
+                }
+                else if(map.getId() == 1){
+                    map = level3;
+                    e.setLocation(SIZE + 8, SIZE + 8);
+                }
+                else if(map.getId() == 2){
+                    map = level1;
+                    e.setLocation(SIZE + 8, SIZE + 8);
+                }
                 map.updateCollisions();
             }
 
-            if(e.checkStarCollision(map.getStarList())){
-                System.out.println("10 POINTS");
+            Rectangle star = e.checkStarCollision(map.getStarList());
+            if(star != null){
+                
             }
         }
     }

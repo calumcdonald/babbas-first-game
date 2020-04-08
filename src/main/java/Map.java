@@ -10,13 +10,15 @@ public class Map {
     public static final int SIZE = 32;
 
     private TiledMap map;
+    private int id;
     private ArrayList<Entity> entities;
     private ArrayList<Rectangle> collisionList;
     private ArrayList<Rectangle> portalList;
     private ArrayList<Rectangle> starList;
 
-    public Map(String mapPath) throws SlickException {
+    public Map(String mapPath, int id) throws SlickException {
         map = new TiledMap(mapPath);
+        this.id = id;
         entities = new ArrayList<>();
         collisionList = new ArrayList<>();
         portalList = new ArrayList<>();
@@ -38,7 +40,7 @@ public class Map {
                     collisionList.add(new Rectangle(i * SIZE, j * SIZE, SIZE, SIZE));
                 }
                 else if(map.getTileId(i, j, tileLayer) == 3){
-                    collisionList.add(new Rectangle(i * SIZE, j * SIZE, SIZE, SIZE));
+                    portalList.add(new Rectangle(i * SIZE, j * SIZE, SIZE, SIZE));
                 }
             }
         }
@@ -62,7 +64,7 @@ public class Map {
             int rand = new Random().nextInt(grass.size());
             Rectangle tile = grass.get(rand);
             entities.add(new Star(tile.getX() + 8, tile.getY() + 8));
-            starList.add(new Rectangle(tile.getX() + 8, tile.getY() + 8, SIZE, SIZE));
+            starList.add(new Rectangle(tile.getX() + 8, tile.getY() + 8, 16, 16));
         }
         return starList;
     }
@@ -85,6 +87,10 @@ public class Map {
 
     public ArrayList<Entity> getEntities(){
         return entities;
+    }
+
+    public int getId(){
+        return id;
     }
 
     public void addEntity(Entity entity){

@@ -44,21 +44,26 @@ public abstract class Entity {
         return null;
     }
 
-    public boolean checkStarCollision(List<Rectangle> starList){
+    public Rectangle checkStarCollision(List<Rectangle> starList){
         for(Rectangle rectangle : starList) {
             if(nextCollisionBox.intersects(rectangle) && this instanceof Player){
                 if(!rectangle.equals(nextCollisionBox) && !rectangle.equals(collisionBox)) {
-                    return true;
+                    return rectangle;
                 }
             }
         }
-        return false;
+        return null;
     }
 
     public void setNextLocation(){
         this.x = nextCollisionBox.getX();
         this.y = nextCollisionBox.getY();
         collisionBox = nextCollisionBox;
+    }
+
+    public void setLocation(float x, float y){
+        this.x = x;
+        this.y = y;
     }
 
     public float getX(){
