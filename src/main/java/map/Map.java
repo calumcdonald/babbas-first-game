@@ -71,6 +71,7 @@ public class Map {
         for(int i = 0; i < 5; i++){
             int rand = new Random().nextInt(grass.size());
             Rectangle tile = grass.get(rand);
+            grass.remove(tile);
             Star newStar = new Star(tile.getX() + 8, tile.getY() + 8);
             Rectangle collisionBox = new Rectangle(tile.getX() + 8, tile.getY() + 8, 16, 16);
             LabelledCollidable collider = new LabelledCollidable(collisionBox, "star");
