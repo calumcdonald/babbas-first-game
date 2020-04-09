@@ -43,6 +43,9 @@ public class MainMenuState extends BasicGameState {
             } else if (exit.isSelected(xPos, yPos)) {
                 gc.exit();
             }
+            else if (scores.isSelected(xPos, yPos)) {
+                sbg.enterState(2);
+            }
         }
     }
 

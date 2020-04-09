@@ -12,7 +12,7 @@ import java.io.IOException;
 public class ExitMenuState extends BasicGameState {
 
     private Image background;
-    private MenuButton exit, restart;
+    private MenuButton exit, restart, scores;
 
     public ExitMenuState(int state){
 
@@ -27,7 +27,8 @@ public class ExitMenuState extends BasicGameState {
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
         background = new Image("data/background.png");
         restart = new MenuButton("data/start.png", background.getWidth()/2 - 64, 250);
-        exit = new MenuButton("data/exit.png", background.getWidth()/2 - 64, 324);
+        scores = new MenuButton("data/scores.png", background.getWidth()/2 - 64, 324);
+        exit = new MenuButton("data/exit.png", background.getWidth()/2 - 64, 398);
     }
 
     @Override
@@ -42,6 +43,8 @@ public class ExitMenuState extends BasicGameState {
                 sbg.enterState(1);
             } else if (exit.isSelected(xPos, yPos)) {
                 gc.exit();
+            } else if (scores.isSelected(xPos, yPos)){
+                sbg.enterState(2);
             }
         }
     }
@@ -54,6 +57,7 @@ public class ExitMenuState extends BasicGameState {
         g.drawString("Your score is: " + getLastScoreLine() + "seconds.", background.getWidth()/2 - 110, 220);
 
         restart.getImg().draw(restart.getX(), restart.getY());
+        scores.getImg().draw(scores.getX(), scores.getY());
         exit.getImg().draw(exit.getX(), exit.getY());
     }
 
