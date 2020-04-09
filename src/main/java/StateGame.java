@@ -35,7 +35,7 @@ public class StateGame extends StateBasedGame {
         try{
             AppGameContainer appgc;
             appgc = new AppGameContainer(new StateGame("Babba's First Game"));
-            appgc.setDisplayMode(700, 700, false);
+            appgc.setDisplayMode(640, 640, false);
             appgc.start();
         } catch(SlickException ex){
             Logger.getLogger(org.newdawn.slick.Game.class.getName()).log(Level.SEVERE, null, ex);

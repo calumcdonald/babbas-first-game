@@ -40,7 +40,7 @@ public class NPC extends Entity implements Collidable {
         long delta = 1;
         long currentTime = System.currentTimeMillis();
 
-        if(currentTime >= lastMoveTime + 3000) {
+        if(currentTime >= lastMoveTime + 30000) {
             direction = new Random().nextInt(4);
         }
 
