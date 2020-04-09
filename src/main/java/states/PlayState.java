@@ -1,5 +1,4 @@
-import java.util.logging.Level;
-import java.util.logging.Logger;
+package states;
 
 import collisions.Collidable;
 import collisions.Collision;
@@ -7,9 +6,10 @@ import entities.Entity;
 import entities.Player;
 import map.Map;
 import org.newdawn.slick.*;
-import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
 
-public class Game extends BasicGame{
+public class PlayState extends BasicGameState {
 
     public static final int SCALE = 2;
     public static final int TILE_SIZE = 32;
@@ -18,12 +18,17 @@ public class Game extends BasicGame{
     private Player babba;
     private long startTime, timeElapsedSecs;
 
-    public Game(String gamename){
-        super(gamename);
+    public PlayState(int state){
+
     }
 
     @Override
-    public void init(GameContainer gc) throws SlickException {
+    public int getID() {
+        return 1;
+    }
+
+    @Override
+    public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
         startTime = System.nanoTime();
 
         level1 = new Map("data/babba.tmx", 0);
@@ -39,7 +44,7 @@ public class Game extends BasicGame{
     }
 
     @Override
-    public void update(GameContainer gc, int i) throws SlickException {
+    public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
         Collidable starToRemove = null;
 
         for(Entity e : map.getEntities()){
@@ -64,8 +69,8 @@ public class Game extends BasicGame{
                         e.setLocation(TILE_SIZE + 8, TILE_SIZE + 8);
                     }
                     else{
+                        sbg.enterState(3);
                         System.out.println("Your score: " + timeElapsedSecs + "secs.");
-                        gc.exit();
                     }
                 }
                 map.updateCollisions();
@@ -82,7 +87,7 @@ public class Game extends BasicGame{
     }
 
     @Override
-    public void render(GameContainer gc, Graphics g) throws SlickException{
+    public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException{
         g.scale(SCALE, SCALE);
         gc.setShowFPS(false);
         map.getMap().render(0, 0);
@@ -122,17 +127,6 @@ public class Game extends BasicGame{
             }
             g.draw(e.getCollisionBox());
             g.setColor(Color.white);
-        }
-    }
-
-    public static void main(String[] args){
-        try{
-            AppGameContainer appgc;
-            appgc = new AppGameContainer(new Game("Babba's First Game"));
-            appgc.setDisplayMode(320 * 2, 320 * 2, false);
-            appgc.start();
-        } catch(SlickException ex){
-            Logger.getLogger(org.newdawn.slick.Game.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
