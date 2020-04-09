@@ -9,6 +9,8 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import java.io.*;
+
 public class PlayState extends BasicGameState {
 
     public static final int SCALE = 2;
@@ -72,6 +74,15 @@ public class PlayState extends BasicGameState {
                         e.setLocation(TILE_SIZE + 8, TILE_SIZE + 8);
                     }
                     else{
+                        try {
+                            BufferedWriter bw = new BufferedWriter(new FileWriter("data/scores.txt", true));
+                            bw.newLine();
+                            bw.append(Long.toString(timeElapsedSecs));
+                            bw.close();
+                        } catch (IOException io) {
+                            System.out.println("An error occurred.");
+                            io.printStackTrace();
+                        }
                         sbg.enterState(3);
                         System.out.println("Your score: " + timeElapsedSecs + "secs.");
                     }
