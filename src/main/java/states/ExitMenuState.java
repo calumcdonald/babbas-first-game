@@ -22,18 +22,8 @@ public class ExitMenuState extends BasicGameState {
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
         background = new Image("data/background.png");
-        restart = new MenuButton("data/start.png", background.getWidth()/2 - 32, 250);
-        exit = new MenuButton("data/exit.png", background.getWidth()/2 - 32, 290);
-    }
-
-    @Override
-    public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-        gc.setShowFPS(false);
-        background.draw(0, 0);
-        g.drawString("FINISH!", background.getWidth()/2 - 20, 200);
-
-        restart.getImg().draw(restart.getX(), restart.getY());
-        exit.getImg().draw(exit.getX(), exit.getY());
+        restart = new MenuButton("data/start.png", background.getWidth()/2 - 64, 230);
+        exit = new MenuButton("data/exit.png", background.getWidth()/2 - 64, 304);
     }
 
     @Override
@@ -50,5 +40,15 @@ public class ExitMenuState extends BasicGameState {
                 gc.exit();
             }
         }
+    }
+
+    @Override
+    public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
+        gc.setShowFPS(false);
+        background.draw(0, 0);
+        g.drawString("FINISH!", background.getWidth()/2 - 30, 200);
+
+        restart.getImg().draw(restart.getX(), restart.getY());
+        exit.getImg().draw(exit.getX(), exit.getY());
     }
 }

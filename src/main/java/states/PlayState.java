@@ -17,6 +17,7 @@ public class PlayState extends BasicGameState {
     private Map level1, level2, level3, map;
     private Player babba;
     private long startTime, timeElapsedSecs;
+    private TrueTypeFont ttf;
 
     public PlayState(int state){
 
@@ -30,6 +31,8 @@ public class PlayState extends BasicGameState {
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
         startTime = System.nanoTime();
+        java.awt.Font font = new java.awt.Font("data/tw_cen_mt.ttf", java.awt.Font.PLAIN, 12);
+        ttf = new TrueTypeFont(font, true);
 
         level1 = new Map("data/babba.tmx", 0);
         level2 = new Map("data/babba2.tmx", 1);
@@ -96,13 +99,16 @@ public class PlayState extends BasicGameState {
             e.getSprite().draw(e.getX(), e.getY());
         }
 
+        //Timer
         long currentTime = System.nanoTime();
         long timeElapsed = currentTime - startTime;
         timeElapsedSecs = timeElapsed / 1000000000;
         String string = "Time: " + Long.toString(timeElapsedSecs) + "s.";
+        g.setFont(ttf);
         g.setColor(Color.black);
         g.drawString(string, 10, 10);
         g.setColor(Color.white);
+
         //renderCollisionBoxes(g);
     }
 
