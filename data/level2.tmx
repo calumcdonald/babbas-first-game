@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.3.3" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="1">
+ <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32" tilecount="9" columns="3">
+  <image source="tileset.png" width="96" height="96"/>
+ </tileset>
+ <layer id="1" name="grass" width="10" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACo2QQQoAMAjDUv//6F0miOs2BSFCDSLMK3arMI3rXPMuJ7xDeN+Lc0+Ff/cly/DNEZw+TK7/aFoLtF2BPZABAAA=
+  </data>
+ </layer>
+ <layer id="3" name="portal" width="10" height="10" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNgGAWUAlYqmgUACXL5nJABAAA=
+  </data>
+ </layer>
+ <layer id="2" name="rock" width="10" height="10" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACmNhYGBggWJmJDY2jA2woLHJUYeLzQzFhNThMw9dPzH2oqtDNoMBjzp8fscWvtjCGwCWFz0hkAEAAA==
+  </data>
+ </layer>
+</map>

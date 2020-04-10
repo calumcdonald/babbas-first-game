@@ -36,9 +36,9 @@ public class PlayState extends BasicGameState {
         java.awt.Font font = new java.awt.Font("data/tw_cen_mt.ttf", java.awt.Font.PLAIN, 12);
         ttf = new TrueTypeFont(font, true);
 
-        level1 = new Map("data/babba.tmx", 0);
-        level2 = new Map("data/babba2.tmx", 1);
-        level3 = new Map("data/babba3.tmx", 2);
+        level1 = new Map("data/level1.tmx", 0);
+        level2 = new Map("data/level2.tmx", 1);
+        level3 = new Map("data/level3.tmx", 2);
         map = level1;
 
         babba = new Player(TILE_SIZE + 8, TILE_SIZE + 8);

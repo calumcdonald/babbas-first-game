@@ -35,16 +35,20 @@ public class Map {
     }
 
     public void createCollisionLists(){
-        int tileLayer = map.getLayerIndex("map");
+        int rockTiles = map.getLayerIndex("rock");
+        int portalTile = map.getLayerIndex("portal");
 
         for(int i = 0; i < map.getWidth(); i++){
             for(int j = 0; j < map.getHeight(); j++){
-                if(map.getTileId(i, j, tileLayer) == 2){
+                //map.getTileId(i, j, rockTiles) == 3 || map.getTileId(i, j, rockTiles) == 4
+                if(map.getTileId(i, j, rockTiles) != 0){
                     Rectangle collisionBox = new Rectangle(i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE);
                     LabelledCollidable collider = new LabelledCollidable(collisionBox, "wall");
                     colliders.add(collider);
                 }
-                else if(map.getTileId(i, j, tileLayer) == 3){
+
+                //map.getTileId(i, j, portalTile) == 5
+                if(map.getTileId(i, j, portalTile) != 0){
                     Rectangle collisionBox = new Rectangle(i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE);
                     LabelledCollidable collider = new LabelledCollidable(collisionBox, "portal");
                     colliders.add(collider);
@@ -55,11 +59,12 @@ public class Map {
 
     public void createStars() throws SlickException{
         ArrayList<Rectangle> invalidTiles = new ArrayList<>();
-        int tileLayer = map.getLayerIndex("map");
+        int tileLayer = map.getLayerIndex("grass");
 
         for(int i = 0; i < map.getWidth(); i++){
             for(int j = 0; j < map.getHeight(); j++){
-                if(map.getTileId(i, j, tileLayer) == 1){
+                //map.getTileId(i, j, tileLayer) == 1 || map.getTileId(i, j, tileLayer) == 2
+                if(map.getTileId(i, j, tileLayer) != 0){
                     Rectangle tile = new Rectangle(i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE);
                     if(!(tile.getX() == TILE_SIZE && tile.getY() == TILE_SIZE) && !(tile.getX() == TILE_SIZE * 8 && tile.getY() == tile.getY())) {
                         invalidTiles.add(tile);
