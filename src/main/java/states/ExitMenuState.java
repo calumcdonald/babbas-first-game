@@ -13,6 +13,7 @@ public class ExitMenuState extends BasicGameState {
 
     private Image background;
     private MenuButton exit, restart, scores;
+    private TrueTypeFont ttf;
 
     public ExitMenuState(int state){
 
@@ -25,6 +26,9 @@ public class ExitMenuState extends BasicGameState {
 
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+        java.awt.Font font = new java.awt.Font("data/tw_cen_mt.ttf", java.awt.Font.PLAIN, 16);
+        ttf = new TrueTypeFont(font, true);
+
         background = new Image("data/background.png");
         restart = new MenuButton("data/start.png", background.getWidth()/2 - 64, 250);
         scores = new MenuButton("data/scores.png", background.getWidth()/2 - 64, 324);
@@ -53,8 +57,9 @@ public class ExitMenuState extends BasicGameState {
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         gc.setShowFPS(false);
         background.draw(0, 0);
+        g.setFont(ttf);
         g.drawString("FINISH!", background.getWidth()/2 - 30, 200);
-        g.drawString("Your score is: " + getLastScoreLine() + "seconds.", background.getWidth()/2 - 110, 220);
+        g.drawString("Your score is: " + getLastScoreLine() + "seconds.", background.getWidth()/2 - 90, 220);
 
         restart.getImg().draw(restart.getX(), restart.getY());
         scores.getImg().draw(scores.getX(), scores.getY());

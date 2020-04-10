@@ -16,6 +16,7 @@ public class ScoresState extends BasicGameState {
 
     private Image background;
     private MenuButton back;
+    private TrueTypeFont ttf;
 
     public ScoresState(int state){
 
@@ -28,6 +29,9 @@ public class ScoresState extends BasicGameState {
 
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+        java.awt.Font font = new java.awt.Font("data/tw_cen_mt.ttf", java.awt.Font.PLAIN, 16);
+        ttf = new TrueTypeFont(font, true);
+
         background = new Image("data/background.png");
         back = new MenuButton("data/start.png", 450, 250);
     }
@@ -49,6 +53,7 @@ public class ScoresState extends BasicGameState {
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
         gc.setShowFPS(false);
         background.draw(0, 0);
+        g.setFont(ttf);
         g.drawString("TOP 10 SCORES", background.getWidth()/2 - 58, 200);
 
         List<Integer> scores = getTopScores();
