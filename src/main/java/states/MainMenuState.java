@@ -29,9 +29,9 @@ public class MainMenuState extends BasicGameState {
         ttf = new TrueTypeFont(font, true);
 
         background = new Image("data/background.png");
-        start = new MenuButton("data/start.png", background.getWidth()/2 - 64, 230);
-        scores = new MenuButton("data/scores.png", background.getWidth()/2 - 64, 304);
-        exit = new MenuButton("data/exit.png", background.getWidth()/2 - 64, 378);
+        start = new MenuButton("data/startB.png", background.getWidth()/2 - 64, 230);
+        scores = new MenuButton("data/scoresB.png", background.getWidth()/2 - 64, 304);
+        exit = new MenuButton("data/exitB.png", background.getWidth()/2 - 64, 378);
     }
 
     @Override

@@ -33,7 +33,7 @@ public class ScoresState extends BasicGameState {
         ttf = new TrueTypeFont(font, true);
 
         background = new Image("data/background.png");
-        back = new MenuButton("data/start.png", 450, 250);
+        back = new MenuButton("data/menuB.png", 450, 250);
     }
 
     @Override
